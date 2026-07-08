@@ -497,6 +497,22 @@ footer{border-top:1px solid var(--line-soft);background:#04070d;padding:56px 0 4
   transition:transform .25s,filter .25s}
 .modal-cta:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .modal-note{margin-top:14px;font-size:13px;color:var(--mut)}
+/* lista čekanja */
+.wl-form{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:480px;margin:0 auto}
+.wl-form input{flex:1;min-width:210px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(5,9,16,.65);padding:13px 22px;color:var(--ink);font-size:15px;outline:none;
+  transition:border-color .25s,box-shadow .25s;font-family:inherit}
+.wl-form input::placeholder{color:var(--mut)}
+.wl-form input:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,171,74,.15)}
+.wl-form input:disabled{opacity:.6}
+.wl-btn{border:none;cursor:pointer;font-family:inherit}
+.wl-btn:disabled{opacity:.7;cursor:default;transform:none!important}
+.wl-status{width:100%;min-height:20px;margin-top:4px;font-size:14px;color:var(--mut);text-align:center}
+.wl-status.ok{color:#8fdf9c}
+.wl-status.err{color:#ee8b98}
+.wl-wrap{max-width:560px;margin:40px auto 0}
+.wl-title{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(17px,2.2vw,20px);
+  color:var(--ink);margin-bottom:16px;text-wrap:balance}
 /* privatnost — duži, lijevo poravnat sadržaj */
 .modal-panel.wide{width:min(720px,94vw)}
 .modal-body.doc{text-align:left;padding:46px 40px 40px}
@@ -864,7 +880,15 @@ body.modal-open{overflow:hidden}
         <span><small>Uskoro na</small><b>Google Playu</b></span>
       </a>
     </div>
-    <p class="cta-note reveal" style="--d:.32s">Želiš obavijest na dan izlaska? <a href="mailto:ilisinleon@gmail.com?subject=Lumen%20—%20javite%20mi%20kad%20iza%C4%91e">Javi nam se</a> — pošaljemo ti poruku.</p>
+    <div class="wl-wrap reveal" style="--d:.32s">
+      <p class="wl-title">Budi prvi na kapiji — <em style="font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent">upiši se na listu čekanja</em></p>
+      <form class="wl-form" novalidate>
+        <input type="email" name="email" required placeholder="tvoj@email.com" aria-label="E-mail adresa za obavijest o izlasku">
+        <button type="submit" class="modal-cta wl-btn">Upiši me</button>
+        <p class="wl-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="cta-note" style="margin-top:12px">Bez spama — samo jedna poruka kad igra izađe.</p>
+    </div>
   </div>
 </section>
 
@@ -923,8 +947,12 @@ body.modal-open{overflow:hidden}
       <h3 class="modal-title" id="soonTitle">Lumen <em>uskoro</em> stiže!</h3>
       <p class="modal-text" id="soonText">Igra je gotova i upravo prolazi završne provjere za App Store i Google Play.</p>
       <div class="modal-orn" aria-hidden="true"><span></span><b></b><span></span></div>
-      <a class="modal-cta" href="mailto:ilisinleon@gmail.com?subject=Lumen%20—%20javite%20mi%20kad%20iza%C4%91e">Javi nam se</a>
-      <p class="modal-note">Pošalji nam poruku i javit ćemo ti na dan izlaska. 👑</p>
+      <form class="wl-form" novalidate>
+        <input type="email" name="email" required placeholder="tvoj@email.com" aria-label="E-mail adresa za obavijest o izlasku">
+        <button type="submit" class="modal-cta wl-btn">Upiši me</button>
+        <p class="wl-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="modal-note">Bez spama — samo jedna poruka kad igra izađe. 👑</p>
     </div>
   </div>
 </div>
@@ -945,6 +973,8 @@ body.modal-open{overflow:hidden}
         <li>Igra ne sadrži reklame, analitiku trećih strana ni praćenje.</li>
         <li>Igra je primjerena svim uzrastima.</li>
       </ul>
+      <p class="strong">Lista čekanja (web-stranica)</p>
+      <p>Ako na ovoj stranici ostaviš e-mail adresu za obavijest o izlasku, ona se sprema isključivo u tu svrhu, ne dijeli se ni s kim i brišemo je nakon slanja obavijesti. Želiš li se skinuti s liste, javi se na e-mail ispod.</p>
       <p>Kontakt: <a href="mailto:ilisinleon@gmail.com">ilisinleon@gmail.com</a></p>
       <div class="doc-div" aria-hidden="true"><span></span><b></b><span></span></div>
       <h3>Privacy Policy — Lumen: Borba znanjem</h3>
@@ -957,6 +987,8 @@ body.modal-open{overflow:hidden}
         <li>No ads, no third-party analytics, no tracking.</li>
         <li>Suitable for all ages.</li>
       </ul>
+      <p class="strong">Waiting list (website)</p>
+      <p>If you leave your email address on this website to be notified at launch, it is stored solely for that purpose, never shared, and deleted after the notification is sent. To be removed at any time, contact the email below.</p>
       <p>Contact: <a href="mailto:ilisinleon@gmail.com">ilisinleon@gmail.com</a></p>
     </div>
   </div>
@@ -1100,6 +1132,44 @@ body.modal-open{overflow:hidden}
     a.addEventListener("click", function(e){
       e.preventDefault();
       openModal("modal-privacy");
+    });
+  });
+
+  /* lista čekanja — Supabase */
+  var SB_URL = "https://thfshicvuibtstydttpu.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZnNoaWN2dWlidHN0eWR0dHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTk3ODEsImV4cCI6MjA5OTA5NTc4MX0.sJ0gP6fHdBs9dABwAtGggNnhKQB9px5dgxC5yek3SD0";
+  document.querySelectorAll(".wl-form").forEach(function(f){
+    var inp = f.querySelector("input"), btn = f.querySelector("button"), st = f.querySelector(".wl-status");
+    f.addEventListener("submit", function(e){
+      e.preventDefault();
+      var em = (inp.value || "").trim().toLowerCase();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) {
+        st.textContent = "Upiši ispravnu e-mail adresu."; st.className = "wl-status err"; inp.focus(); return;
+      }
+      var old = btn.textContent;
+      btn.disabled = true; btn.textContent = "Upisujem…";
+      st.textContent = ""; st.className = "wl-status";
+      fetch(SB_URL + "/rest/v1/waitlist", {
+        method: "POST",
+        headers: {
+          "apikey": SB_KEY,
+          "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ email: em })
+      }).then(function(r){
+        if (r.status === 201) {
+          st.textContent = "✓ Na listi si! Javit ćemo ti na dan izlaska. 👑"; st.className = "wl-status ok";
+          inp.disabled = true; btn.textContent = "Upisano";
+        } else if (r.status === 409) {
+          st.textContent = "Ta je adresa već na listi — hvala!"; st.className = "wl-status ok";
+          btn.disabled = false; btn.textContent = old;
+        } else { throw new Error("HTTP " + r.status); }
+      }).catch(function(){
+        st.textContent = "Nešto je zapelo — provjeri vezu i pokušaj ponovno."; st.className = "wl-status err";
+        btn.disabled = false; btn.textContent = old;
+      });
     });
   });
 
