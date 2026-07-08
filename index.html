@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumen — Borba znanjem</title>
+<meta name="description" content="Lumen je hrvatska igra znanja i strategije: šahovska ploča, viteške figure, a poteze osvajaš znanjem. 2500+ pitanja, 8 kategorija, online dvoboji 1 na 1. Besplatno, bez reklama. Uskoro na App Storeu i Google Playu.">
+<meta name="theme-color" content="#060b14">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lumen — Borba znanjem">
+<meta property="og:description" content="Šahovska ploča. Viteške figure. Ali poteze osvajaš znanjem. 2500+ pitanja, online dvoboji, od Kmeta do Kralja — besplatno i bez reklama.">
+<meta property="og:image" content="images/grb.png">
+<meta property="og:locale" content="hr_HR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lumen — Borba znanjem">
+<meta name="twitter:description" content="Hrvatska igra znanja i strategije. Uskoro na App Storeu i Google Playu.">
+<meta name="twitter:image" content="images/grb.png">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Lumen — Borba znanjem",
+  "description": "Hrvatska igra znanja i strategije na šahovskoj ploči. Točan odgovor pomiče figuru; dvoboji pitanje po pitanje; 2500+ pitanja u 8 kategorija.",
+  "inLanguage": "hr",
+  "genre": ["Trivia", "Strategy"],
+  "applicationCategory": "Game",
+  "operatingSystem": "iOS, Android",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+<style>
+/* ============ TEMELJ ============ */
+:root{
+  --bg0:#050910;
+  --bg1:#0a1220;
+  --bg2:#0d1830;
+  --panel:#0b1424;
+  --panel-hi:#101c33;
+  --gold:#d9ab4a;
+  --gold-hi:#f6d98a;
+  --gold-deep:#9c7428;
+  --line:rgba(217,171,74,.26);
+  --line-soft:rgba(217,171,74,.14);
+  --ink:#f2e9d3;
+  --body:#aeb9ce;
+  --mut:#7d89a0;
+  --red:#c22030;
+  --red-hi:#ea4458;
+  --blue:#3b6ad8;
+  --ember:#ff9a3c;
+  --grad-gold:linear-gradient(180deg,#f9e7ab 0%,#ecc46e 38%,#c9942f 62%,#f2d78d 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{
+  background:var(--bg0);
+  color:var(--body);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--gold-hi);text-decoration:none}
+::selection{background:rgba(217,171,74,.32);color:#fff}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:4px}
+
+.skip{position:absolute;left:-999px;top:0;background:var(--gold);color:#1c1405;padding:10px 18px;border-radius:0 0 10px 0;z-index:200;font-weight:600}
+.skip:focus{left:0}
+
+.wrap{width:min(1140px,92vw);margin:0 auto}
+section{position:relative;scroll-margin-top:84px}
+
+/* filmsko zrno */
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ============ TIPOGRAFSKI SUSTAV ============ */
+.eyebrow{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  font-size:11.5px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:18px;text-indent:.36em;
+}
+.eyebrow::before,.eyebrow::after{content:"";height:1px;width:44px;
+  background:linear-gradient(90deg,transparent,var(--line));flex:none}
+.eyebrow::after{background:linear-gradient(90deg,var(--line),transparent)}
+.h2{
+  font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:clamp(30px,4.6vw,50px);line-height:1.16;color:var(--ink);
+  font-weight:600;letter-spacing:.005em;text-align:center;
+  text-wrap:balance;
+}
+.h2 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:680px;margin:20px auto 0;text-align:center;color:var(--body);font-size:clamp(16px,1.9vw,18.5px)}
+
+/* ukrasni razdjelnik */
+.orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:26px auto 0}
+.orn span{height:1px;width:74px;background:linear-gradient(90deg,transparent,var(--line))}
+.orn span:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.orn b{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 12px rgba(217,171,74,.6)}
+
+/* otkrivanje pri skrolanju */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease var(--d,0s),transform .8s cubic-bezier(.22,.7,.3,1) var(--d,0s)}
+.reveal.on{opacity:1;transform:none}
+
+/* ============ NAVIGACIJA ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .35s,border-color .35s;
+  border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(6,10,18,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:var(--line-soft)}
+.nav-in{width:min(1240px,94vw);margin:0 auto;display:flex;align-items:center;gap:26px;padding:13px 0}
+.brand{display:flex;align-items:center;gap:11px;margin-right:auto}
+.brand img{width:36px;height:36px;border-radius:9px;border:1px solid var(--line)}
+.brand b{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:19px;letter-spacing:.3em;text-indent:.3em;
+  background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.nav-links{display:none;gap:26px;align-items:center}
+.nav-links a{color:var(--body);font-size:14.5px;letter-spacing:.02em;transition:color .25s}
+.nav-links a:hover{color:var(--gold-hi)}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:8px;border-radius:999px;
+  background:linear-gradient(180deg,#f4d98d,#d5a844 55%,#bb8a30);
+  color:#221806;font-weight:700;font-size:14.5px;padding:10px 22px;letter-spacing:.02em;
+  box-shadow:0 6px 22px rgba(213,168,68,.32),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .25s,box-shadow .25s,filter .25s}
+.btn-gold:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 10px 28px rgba(213,168,68,.42),inset 0 1px 0 rgba(255,255,255,.5)}
+@media(min-width:920px){.nav-links{display:flex}}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:calc(100svh - 44px);display:flex;flex-direction:column;justify-content:center;
+  padding:104px 0 56px;background:#04070d;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-bg::before{content:"";position:absolute;left:-4%;right:-4%;top:-4%;height:min(122vh,1250px);
+  background:url("images/hero-bg.jpg") 46% 30%/cover no-repeat;
+  -webkit-mask-image:linear-gradient(180deg,#000 66%,transparent 99%);
+  mask-image:linear-gradient(180deg,#000 66%,transparent 99%);
+  animation:kenburns 40s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1) translateY(-1.2%)}}
+.hero-scrim{position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(4,7,13,.87) 0%, rgba(4,7,13,.48) 24%, rgba(4,7,13,.40) 48%, rgba(5,9,16,.80) 76%, #050910 97%),
+    radial-gradient(150% 100% at 50% 42%, transparent 52%, rgba(4,7,13,.72) 100%),
+    radial-gradient(90% 55% at 50% 112%, rgba(255,138,58,.14), transparent 62%)}
+/* božje zrake iza grba i naslova */
+.rays{position:absolute;left:50%;top:-36vw;width:min(1500px,170vw);aspect-ratio:1;
+  transform:translateX(-50%);z-index:1;pointer-events:none;opacity:.55;
+  -webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent 66%);
+  mask-image:radial-gradient(closest-side,#000 20%,transparent 66%)}
+@media(min-width:900px){.rays{top:-520px}}
+.rays i{position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg, rgba(246,217,138,.13) 0deg 5deg, transparent 5deg 24deg);
+  animation:spin 90s linear infinite}
+.rays i:nth-child(2){background:repeating-conic-gradient(from 12deg, rgba(255,170,80,.09) 0deg 3deg, transparent 3deg 29deg);
+  animation:spin 150s linear infinite reverse}
+@keyframes spin{to{rotate:360deg}}
+/* zlatne čestice koje se uzdižu */
+.dust{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.dust i{position:absolute;bottom:-10px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#ffe9ad,rgba(246,217,138,0) 70%);
+  opacity:0;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translate3d(0,0,0) scale(1);opacity:0}
+  8%{opacity:.85}
+  60%{opacity:.45}
+  100%{transform:translate3d(30px,-94vh,0) scale(.45);opacity:0}}
+.hero-in{position:relative;z-index:3;width:min(1140px,92vw);margin:0 auto;text-align:center}
+
+.crest{position:relative;width:clamp(128px,17vw,180px);margin:0 auto 30px}
+.crest::before{content:"";position:absolute;inset:-34%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(217,171,74,.32),rgba(217,171,74,.07) 55%,transparent 72%);
+  animation:halo 5s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
+.crest img{position:relative;border-radius:26px;border:1px solid rgba(246,217,138,.4);
+  box-shadow:0 18px 60px rgba(0,0,0,.6),0 0 0 5px rgba(217,171,74,.09)}
+
+/* kraljevski pečat — grb u krugu */
+.seal{position:relative;width:clamp(92px,11vw,120px);margin:0 auto 30px;animation:floaty 7s ease-in-out infinite}
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.seal::before{content:"";position:absolute;inset:-42%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(217,171,74,.30),rgba(217,171,74,.06) 55%,transparent 72%);
+  animation:halo 5s ease-in-out infinite}
+.seal img{position:relative;border-radius:50%;border:1px solid rgba(246,217,138,.6);
+  box-shadow:0 0 0 6px rgba(217,171,74,.10),0 0 0 7px rgba(217,171,74,.22),0 16px 50px rgba(0,0,0,.65)}
+.hero h1{
+  font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:clamp(70px,13.5vw,164px);line-height:1;font-weight:700;letter-spacing:.14em;text-indent:.14em;
+  background:linear-gradient(100deg,#f9e7ab 0%,#ecc46e 15%,#c9942f 30%,#f2d78d 41%,#c9942f 55%,#fff3cf 63%,#c9942f 71%,#ecc46e 85%,#f9e7ab 100%);
+  background-size:240% 100%;background-position:0% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 22px rgba(217,171,74,.30)) drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  animation:shine 5.5s ease-in-out infinite alternate;
+  margin-bottom:6px}
+@keyframes shine{0%,55%{background-position:0% 0}100%{background-position:100% 0}}
+.hero-tag{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:2px;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;
+  font-size:clamp(15px,2.6vw,22px);letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;color:var(--ink)}
+.hero-tag::before,.hero-tag::after{content:"";height:1px;width:clamp(30px,6vw,80px);flex:none;
+  background:linear-gradient(90deg,transparent,var(--line))}
+.hero-tag::after{background:linear-gradient(90deg,var(--line),transparent)}
+.hero-line{margin:34px auto 0;max-width:620px;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-style:italic;
+  font-size:clamp(19px,2.6vw,27px);color:var(--ink);opacity:.96;
+  text-shadow:0 1px 10px rgba(0,0,0,.55)}
+.hero-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;margin-top:26px;
+  font-size:11.5px;letter-spacing:.24em;text-indent:.06em;text-transform:uppercase;color:rgba(232,196,120,.85)}
+.hero-meta b{width:5px;height:5px;flex:none;background:rgba(217,171,74,.55);transform:rotate(45deg)}
+
+.stores{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:36px}
+.store{
+  display:flex;align-items:center;gap:13px;text-align:left;
+  border:1px solid var(--line);border-radius:15px;padding:11px 22px 11px 17px;
+  background:linear-gradient(180deg,#111b2e,#0a111f);
+  transition:transform .25s,border-color .25s,box-shadow .25s;min-width:196px}
+.store:hover{transform:translateY(-3px);border-color:rgba(246,217,138,.6);box-shadow:0 14px 34px rgba(0,0,0,.5),0 0 0 1px rgba(246,217,138,.15)}
+.store svg{width:28px;height:28px;fill:var(--gold-hi);flex:none}
+.store small{display:block;font-size:11px;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.store b{display:block;font-size:17.5px;color:var(--ink);font-weight:600;line-height:1.25;
+  font-family:"Hoefler Text",Palatino,Georgia,serif}
+
+/* izlog — screenshot koji izranja ispod heroja */
+.hero-shot{position:relative;z-index:4;width:min(1000px,93vw);
+  margin:clamp(-96px,-6vw,-56px) auto clamp(72px,9vw,116px)}
+
+/* ============ ZLATNI OKVIR ZA SLIKE ============ */
+.frame{position:relative;border:1px solid var(--line);border-radius:18px;
+  padding:clamp(9px,1.3vw,14px);
+  background:linear-gradient(180deg,rgba(217,171,74,.10),rgba(217,171,74,.02) 55%,rgba(217,171,74,.07));
+  box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.frame::before{content:"";position:absolute;inset:4px;border:1px solid rgba(217,171,74,.16);border-radius:14px;pointer-events:none}
+.frame img{border-radius:10px;width:100%}
+.frame .corner{position:absolute;width:15px;height:15px;border-color:var(--gold-hi);border-style:solid;opacity:.85}
+.frame .c1{top:-2px;left:-2px;border-width:2px 0 0 2px;border-radius:6px 0 0 0}
+.frame .c2{top:-2px;right:-2px;border-width:2px 2px 0 0;border-radius:0 6px 0 0}
+.frame .c3{bottom:-2px;left:-2px;border-width:0 0 2px 2px;border-radius:0 0 0 6px}
+.frame .c4{bottom:-2px;right:-2px;border-width:0 2px 2px 0;border-radius:0 0 6px 0}
+
+/* ============ TRAKA (MARQUEE) ============ */
+.ribbon{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  background:linear-gradient(180deg,rgba(217,171,74,.05),rgba(217,171,74,.015));
+  padding:15px 0;overflow:hidden}
+.ribbon .track{display:flex;gap:0;width:max-content;animation:marq 30s linear infinite}
+.ribbon span{display:inline-flex;align-items:center;gap:26px;padding-right:26px;white-space:nowrap;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:rgba(217,171,74,.75)}
+.ribbon b{color:rgba(246,217,138,.55);font-weight:400;transform:rotate(45deg);font-size:9px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ============ SEKCIJE ============ */
+.sec{padding:clamp(84px,11vw,140px) 0}
+
+/* kartice značajki */
+.cards3{display:grid;gap:20px;margin-top:56px}
+@media(min-width:820px){.cards3{grid-template-columns:repeat(3,1fr);gap:26px}}
+.card{position:relative;border:1px solid var(--line-soft);border-radius:18px;padding:34px 30px 36px;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+  transition:transform .35s,border-color .35s,box-shadow .35s;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(246,217,138,.5),transparent);opacity:.5}
+.card:hover{transform:translateY(-6px);border-color:var(--line);box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.card::after{content:"";position:absolute;top:-40px;left:-40px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(246,217,138,.10),transparent 70%);
+  opacity:0;transition:opacity .4s;pointer-events:none}
+.card:hover::after{opacity:1}
+.card .ico{width:54px;height:54px;border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;
+  background:rgba(217,171,74,.07);margin-bottom:22px;transition:box-shadow .35s,border-color .35s}
+.card:hover .ico{border-color:rgba(246,217,138,.5);box-shadow:0 0 22px rgba(217,171,74,.25)}
+.card .ico svg{width:28px;height:28px;stroke:var(--gold-hi);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:22px;color:var(--ink);font-weight:600;margin-bottom:10px}
+.card p{font-size:15.5px;color:var(--body)}
+
+/* koraci */
+.steps{display:flex;flex-direction:column;gap:clamp(64px,9vw,110px);margin-top:clamp(72px,10vw,120px)}
+.step{display:grid;gap:34px;align-items:center}
+@media(min-width:900px){
+  .step{grid-template-columns:5fr 6fr;gap:clamp(40px,5.5vw,72px)}
+  .step.flip .step-txt{order:2}
+}
+.stepnum{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.stepnum b{width:52px;height:52px;flex:none;border:1.5px solid var(--gold);border-radius:50%;
+  display:grid;place-items:center;font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:22px;color:var(--gold-hi);
+  background:radial-gradient(circle at 50% 30%,rgba(217,171,74,.18),rgba(217,171,74,.03));
+  box-shadow:0 0 22px rgba(217,171,74,.22)}
+.stepnum span{height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+.step h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(24px,3vw,32px);color:var(--ink);font-weight:600;margin-bottom:12px}
+.step p{max-width:46ch}
+
+/* ============ DVOBOJ ============ */
+.duel{
+  background:
+    radial-gradient(52% 46% at 8% 18%, rgba(194,32,48,.16), transparent 70%),
+    radial-gradient(52% 46% at 92% 82%, rgba(59,106,216,.14), transparent 70%),
+    linear-gradient(180deg,#04070d,#0a0f1c 50%,#04070d);
+  border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.duelbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin:46px auto 40px}
+.dpill{display:flex;align-items:center;gap:11px;border-radius:999px;padding:11px 24px;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:16.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.dpill .hearts{display:flex;gap:5px}
+.dpill svg{width:19px;height:19px}
+.dpill.red{color:#ffd9dd;border:1.5px solid rgba(234,68,88,.75);background:linear-gradient(180deg,rgba(120,14,26,.55),rgba(60,8,14,.55));
+  box-shadow:0 0 26px rgba(234,68,88,.28)}
+.dpill.red svg{fill:var(--red-hi)}
+.dpill.blue{color:#d7e2ff;border:1.5px solid rgba(90,130,230,.7);background:linear-gradient(180deg,rgba(23,45,110,.55),rgba(10,20,52,.55));
+  box-shadow:0 0 26px rgba(59,106,216,.26)}
+.dpill.blue svg{fill:#5d8bf0}
+.dpill svg{animation:beat 1.9s ease-in-out infinite}
+.dpill svg:nth-child(2){animation-delay:.18s}.dpill svg:nth-child(3){animation-delay:.36s}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.22)}24%{transform:scale(1)}}
+.dvs{width:46px;height:46px;flex:none;transform:rotate(45deg);border:1.5px solid var(--gold);border-radius:9px;
+  display:grid;place-items:center;background:rgba(217,171,74,.08);
+  animation:vspulse 2.6s ease-in-out infinite}
+@keyframes vspulse{0%,100%{box-shadow:0 0 18px rgba(217,171,74,.25)}50%{box-shadow:0 0 34px rgba(246,217,138,.5)}}
+.dvs span{transform:rotate(-45deg);font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:15px;font-weight:700;color:var(--gold-hi);letter-spacing:.05em}
+.duel-shot{width:min(960px,92vw);margin:0 auto}
+.duel-facts{display:grid;gap:14px;margin:44px auto 0;max-width:960px}
+@media(min-width:760px){.duel-facts{grid-template-columns:repeat(3,1fr)}}
+.dfact{border:1px solid var(--line-soft);border-radius:14px;padding:20px 22px;background:rgba(11,20,36,.6);text-align:center}
+.dfact b{display:block;font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:18px;color:var(--gold-hi);font-weight:600;margin-bottom:5px}
+.dfact span{font-size:14.5px;color:var(--body)}
+
+/* ============ GALERIJA ============ */
+.galwrap{position:relative;margin-top:56px}
+.gal{display:flex;gap:clamp(16px,2.4vw,26px);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:10px calc(50vw - min(430px,42vw)) 26px;scrollbar-width:none}
+.gal::-webkit-scrollbar{display:none}
+.slide{flex:0 0 min(860px,84vw);scroll-snap-align:center}
+.slide .frame{overflow:hidden}
+.slide img{transition:transform .6s cubic-bezier(.22,.7,.3,1)}
+@media(hover:hover){.slide:hover img{transform:scale(1.025)}}
+.slide figcaption{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;
+  font-size:14px;color:var(--mut);letter-spacing:.04em;text-align:center}
+.slide figcaption::before{content:"";width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none;opacity:.8}
+.gbtn{position:absolute;top:42%;transform:translateY(-50%);z-index:5;width:52px;height:52px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(8,13,24,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  color:var(--gold-hi);cursor:pointer;display:none;place-items:center;transition:border-color .25s,background .25s}
+.gbtn:hover{border-color:var(--gold-hi);background:rgba(217,171,74,.14)}
+.gbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gbtn.prev{left:max(12px,3vw)}.gbtn.next{right:max(12px,3vw)}
+@media(min-width:1000px){.gbtn{display:grid}}
+.gdots{display:flex;justify-content:center;gap:9px;margin-top:8px}
+.gdots i{width:7px;height:7px;border-radius:50%;background:rgba(217,171,74,.25);transition:background .3s,transform .3s}
+.gdots i.on{background:var(--gold-hi);transform:scale(1.3);box-shadow:0 0 8px rgba(246,217,138,.7)}
+
+/* ============ KATEGORIJE ============ */
+.catgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:52px}
+@media(min-width:820px){.catgrid{grid-template-columns:repeat(4,1fr);gap:16px}}
+.cat{display:flex;align-items:center;gap:12px;border:1px solid var(--line-soft);border-radius:13px;
+  padding:15px 18px;background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+  font-size:15px;color:var(--ink);letter-spacing:.03em;transition:transform .3s,border-color .3s,box-shadow .3s}
+.cat i{width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);flex:none}
+.cat:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 55%,transparent);
+  box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.lvls{display:grid;gap:18px;margin-top:56px}
+@media(min-width:820px){.lvls{grid-template-columns:repeat(3,1fr);gap:24px}}
+.lvl{position:relative;border:1px solid var(--line-soft);border-radius:18px;padding:32px 28px;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));transition:transform .3s,border-color .3s}
+.lvl::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(246,217,138,.5),transparent);opacity:.5}
+.lvl:hover{transform:translateY(-5px);border-color:var(--line)}
+.lvl .rn{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:15px;letter-spacing:.3em;text-indent:.3em;color:var(--gold);
+  border:1px solid var(--line);border-radius:999px;display:inline-block;padding:4px 16px;margin-bottom:18px}
+.lvl h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:22px;color:var(--ink);font-weight:600;margin-bottom:9px}
+.lvl p{font-size:15px}
+.lvl-note{text-align:center;margin-top:30px;font-size:15px;color:var(--mut);font-style:italic}
+.lvl-note b{color:var(--gold-hi);font-weight:600}
+
+/* ============ NAPREDAK ============ */
+.roadwrap{overflow-x:auto;margin-top:60px;padding-bottom:8px;scrollbar-width:none}
+.roadwrap::-webkit-scrollbar{display:none}
+.road{display:flex;min-width:660px;position:relative;padding-top:34px}
+.road::before{content:"";position:absolute;top:58px;left:7%;right:7%;height:2px;
+  background:linear-gradient(90deg,rgba(217,171,74,.5),rgba(217,171,74,.18))}
+.node{flex:1;text-align:center;position:relative}
+.node .disc{width:48px;height:48px;margin:0 auto;border-radius:50%;border:2px solid rgba(217,171,74,.35);
+  display:grid;place-items:center;background:#0a1322;position:relative;z-index:2;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:15px;color:var(--mut);font-weight:700;
+  transition:all .55s cubic-bezier(.22,.7,.3,1)}
+.node .nm{margin-top:12px;font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(14px,1.7vw,17px);
+  color:var(--mut);letter-spacing:.08em;text-transform:uppercase;transition:color .5s}
+.node .xp{font-size:11px;color:var(--mut);letter-spacing:.08em;opacity:.75}
+.node .crown{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:30px;height:30px;opacity:.35;transition:all .6s;z-index:3}
+.node .crown svg{width:100%;height:100%;fill:var(--gold-hi)}
+.node.lit .disc{border-color:var(--gold-hi);color:#241a05;
+  background:radial-gradient(circle at 50% 32%,#f8e3a4,#d9ab4a 70%);
+  box-shadow:0 0 26px rgba(246,217,138,.5)}
+.node.lit .nm{color:var(--ink)}
+.node.lit .crown{opacity:1;transform:translateX(-50%) translateY(-6px);filter:drop-shadow(0 0 10px rgba(246,217,138,.8))}
+.prog-feats{display:grid;gap:14px;margin:56px auto 0;max-width:1000px}
+@media(min-width:760px){.prog-feats{grid-template-columns:repeat(3,1fr)}}
+.pfeat{display:flex;gap:15px;align-items:flex-start;border:1px solid var(--line-soft);border-radius:14px;
+  padding:20px;background:rgba(11,20,36,.55)}
+.pfeat svg{width:26px;height:26px;flex:none;stroke:var(--gold-hi);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.pfeat b{display:block;color:var(--ink);font-size:15.5px;font-weight:600;margin-bottom:3px;font-family:"Hoefler Text",Palatino,Georgia,serif;letter-spacing:.02em}
+.pfeat span{font-size:14px;color:var(--body)}
+.prog-shot{width:min(960px,92vw);margin:64px auto 0}
+
+/* ============ POVJERENJE ============ */
+.trust{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  background:linear-gradient(180deg,rgba(217,171,74,.045),transparent)}
+.trust-in{display:grid;grid-template-columns:repeat(2,1fr);gap:34px 18px;padding:clamp(48px,6vw,72px) 0}
+@media(min-width:820px){.trust-in{grid-template-columns:repeat(4,1fr)}}
+.titem{text-align:center}
+.titem .tico{width:56px;height:56px;margin:0 auto 14px;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;background:rgba(217,171,74,.06)}
+.titem svg{width:26px;height:26px;stroke:var(--gold-hi);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.titem b{display:block;font-family:"Hoefler Text",Palatino,Georgia,serif;color:var(--ink);font-size:17px;font-weight:600;margin-bottom:3px}
+.titem span{font-size:13.5px;color:var(--mut)}
+
+/* ============ FAQ ============ */
+.faq{max-width:780px;margin:52px auto 0}
+.fitem{border-bottom:1px solid var(--line-soft)}
+.fitem:first-child{border-top:1px solid var(--line-soft)}
+.fq{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;
+  background:none;border:none;cursor:pointer;padding:22px 4px;color:var(--ink);
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(17px,2.2vw,20px);font-weight:600;letter-spacing:.01em}
+.fq .pl{width:30px;height:30px;flex:none;border:1px solid var(--line);border-radius:50%;position:relative;transition:transform .35s,background .35s}
+.fq .pl::before,.fq .pl::after{content:"";position:absolute;background:var(--gold-hi);top:50%;left:50%;transform:translate(-50%,-50%)}
+.fq .pl::before{width:12px;height:1.5px}
+.fq .pl::after{width:1.5px;height:12px}
+.fitem.open .fq .pl{transform:rotate(45deg);background:rgba(217,171,74,.12)}
+.fa{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.fa p{padding:0 44px 24px 4px;font-size:15.5px;color:var(--body)}
+.fa a{border-bottom:1px solid rgba(246,217,138,.4)}
+
+/* ============ ZAVRŠNI CTA ============ */
+.cta{position:relative;overflow:clip;text-align:center;
+  background:
+    radial-gradient(110% 70% at 50% 118%, rgba(255,138,58,.22), rgba(234,68,88,.07) 45%, transparent 70%),
+    linear-gradient(180deg,#04070d,#0a1322 60%,#060b16)}
+.cta .rays{top:auto;bottom:-46%;opacity:.3;width:min(1100px,140vw)}
+.cta .seal{width:108px;margin-bottom:26px}
+.cta .h2{font-size:clamp(34px,5.4vw,58px)}
+.cta .stores{margin-top:36px}
+.cta-note{margin-top:26px;font-size:14.5px;color:var(--mut)}
+.cta-note a{border-bottom:1px solid rgba(246,217,138,.4)}
+
+/* ============ PODNOŽJE ============ */
+footer{border-top:1px solid var(--line-soft);background:#04070d;padding:56px 0 40px}
+.foot{display:grid;gap:40px}
+@media(min-width:820px){.foot{grid-template-columns:1.4fr 1fr 1fr;gap:24px}}
+.fbrand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.fbrand img{width:42px;height:42px;border-radius:10px;border:1px solid var(--line)}
+.fbrand b{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:20px;letter-spacing:.26em;text-indent:.26em;
+  background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.foot p{font-size:14px;color:var(--mut);max-width:34ch}
+.foot h4{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+.foot ul{list-style:none}
+.foot li{margin-bottom:11px}
+.foot li a{color:var(--body);font-size:14.5px;transition:color .25s}
+.foot li a:hover{color:var(--gold-hi)}
+.socials{display:flex;gap:12px}
+.socials a{width:42px;height:42px;border:1px solid var(--line-soft);border-radius:50%;display:grid;place-items:center;
+  transition:border-color .25s,transform .25s,background .25s}
+.socials a:hover{border-color:var(--gold-hi);transform:translateY(-2px);background:rgba(217,171,74,.08)}
+.socials svg{width:19px;height:19px;fill:var(--body)}
+.socials a:hover svg{fill:var(--gold-hi)}
+.foot-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;
+  border-top:1px solid var(--line-soft);margin-top:46px;padding-top:26px;font-size:13.5px;color:var(--mut)}
+.hrmade{display:inline-flex;align-items:center;gap:9px}
+.hrmade svg{width:17px;height:17px}
+
+/* ============ MODALI ============ */
+.modal{position:fixed;inset:0;z-index:160;display:flex;align-items:center;justify-content:center;
+  padding:20px;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
+.modal.open{visibility:visible;opacity:1}
+.modal-back{position:absolute;inset:0;background:rgba(3,6,11,.78);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.modal-panel{position:relative;width:min(560px,94vw);max-height:84vh;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,#101c33,#0a1424);
+  box-shadow:0 50px 120px rgba(0,0,0,.7),0 0 0 1px rgba(246,217,138,.08);
+  transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.22,.7,.3,1)}
+.modal.open .modal-panel{transform:none}
+.modal-panel::before{content:"";position:absolute;inset:5px;border:1px solid rgba(217,171,74,.18);
+  border-radius:15px;pointer-events:none;z-index:1}
+.modal-x{position:absolute;top:14px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(8,13,24,.7);color:var(--gold-hi);cursor:pointer;
+  display:grid;place-items:center;transition:border-color .25s,background .25s,transform .25s}
+.modal-x:hover{border-color:var(--gold-hi);background:rgba(217,171,74,.14);transform:rotate(90deg)}
+.modal-x svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.modal-body{position:relative;z-index:2;overflow-y:auto;padding:44px 38px 38px;text-align:center}
+.modal-seal{width:84px;margin:0 auto 20px;position:relative}
+.modal-seal img{border-radius:50%;border:1px solid rgba(246,217,138,.55);
+  box-shadow:0 0 0 5px rgba(217,171,74,.10),0 12px 34px rgba(0,0,0,.55)}
+.modal-title{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(24px,4vw,30px);
+  color:var(--ink);font-weight:600;margin-bottom:12px;text-wrap:balance}
+.modal-title em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.modal-text{font-size:15.5px;color:var(--body);max-width:40ch;margin:0 auto}
+.modal-orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px auto}
+.modal-orn span{height:1px;width:56px;background:linear-gradient(90deg,transparent,var(--line))}
+.modal-orn span:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.modal-orn b{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.modal-cta{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+  background:linear-gradient(180deg,#f4d98d,#d5a844 55%,#bb8a30);color:#221806;
+  font-weight:700;font-size:15px;padding:13px 30px;
+  box-shadow:0 8px 26px rgba(213,168,68,.35),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .25s,filter .25s}
+.modal-cta:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.modal-note{margin-top:14px;font-size:13px;color:var(--mut)}
+/* privatnost — duži, lijevo poravnat sadržaj */
+.modal-panel.wide{width:min(720px,94vw)}
+.modal-body.doc{text-align:left;padding:46px 40px 40px}
+.doc h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:22px;color:var(--ink);font-weight:600;margin-bottom:4px}
+.doc .doc-date{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.doc p{font-size:15px;color:var(--body);margin-bottom:14px}
+.doc p.strong{color:var(--ink);font-weight:600}
+.doc ul{list-style:none;margin:0 0 18px;padding:0}
+.doc li{position:relative;padding-left:22px;margin-bottom:10px;font-size:14.5px;color:var(--body)}
+.doc li::before{content:"";position:absolute;left:4px;top:9px;width:6px;height:6px;
+  background:rgba(217,171,74,.7);transform:rotate(45deg)}
+.doc .doc-div{display:flex;align-items:center;gap:12px;margin:26px 0}
+.doc .doc-div span{height:1px;flex:1;background:var(--line-soft)}
+.doc .doc-div b{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none}
+.doc a{border-bottom:1px solid rgba(246,217,138,.4)}
+body.modal-open{overflow:hidden}
+
+/* ============ REDUCIRANO KRETANJE ============ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+  .ribbon .track{animation:none}
+  .hero-shot .frame{transform:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#igra">Preskoči na sadržaj</a>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ==================== NAVIGACIJA ==================== -->
+<nav class="nav" id="nav" aria-label="Glavna navigacija">
+  <div class="nav-in">
+    <a class="brand" href="#vrh" aria-label="Lumen — početak stranice">
+      <img src="images/favicon.png" alt="" width="36" height="36">
+      <b>LUMEN</b>
+    </a>
+    <div class="nav-links">
+      <a href="#igra">Igra</a>
+      <a href="#dvoboj">Dvoboj</a>
+      <a href="#galerija">Galerija</a>
+      <a href="#kategorije">Kategorije</a>
+      <a href="#napredak">Napredak</a>
+      <a href="#faq">Pitanja</a>
+    </div>
+    <a class="btn-gold" href="#preuzmi">Preuzmi</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero" id="vrh">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="rays" aria-hidden="true"><i></i><i></i></div>
+  <div class="dust" aria-hidden="true">
+    <i style="left:6%;width:4px;height:4px;animation-duration:15s;animation-delay:0s"></i>
+    <i style="left:14%;width:3px;height:3px;animation-duration:21s;animation-delay:4s"></i>
+    <i style="left:23%;width:5px;height:5px;animation-duration:17s;animation-delay:8s"></i>
+    <i style="left:34%;width:3px;height:3px;animation-duration:23s;animation-delay:2s"></i>
+    <i style="left:43%;width:4px;height:4px;animation-duration:14s;animation-delay:10s"></i>
+    <i style="left:52%;width:3px;height:3px;animation-duration:19s;animation-delay:6s"></i>
+    <i style="left:61%;width:5px;height:5px;animation-duration:16s;animation-delay:12s"></i>
+    <i style="left:70%;width:3px;height:3px;animation-duration:22s;animation-delay:1s"></i>
+    <i style="left:78%;width:4px;height:4px;animation-duration:15s;animation-delay:9s"></i>
+    <i style="left:86%;width:3px;height:3px;animation-duration:20s;animation-delay:5s"></i>
+    <i style="left:93%;width:4px;height:4px;animation-duration:18s;animation-delay:13s"></i>
+    <i style="left:48%;width:6px;height:6px;animation-duration:13s;animation-delay:7s"></i>
+  </div>
+  <div class="hero-in">
+    <div class="seal reveal"><img src="images/grb.png" alt="Grb igre Lumen — zlatni štit s crveno-bijelom šahovnicom, krunom, knjigom i perom" width="900" height="900"></div>
+    <h1 class="reveal" style="--d:.1s">LUMEN</h1>
+    <p class="hero-tag reveal" style="--d:.18s">Borba znanjem</p>
+    <p class="hero-line reveal" style="--d:.28s">Strategija na ploči. Pobjeda u glavi.</p>
+    <div class="stores reveal" style="--d:.38s">
+      <a class="store js-soon" href="#" aria-label="App Store — uskoro">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span><small>Uskoro u</small><b>App Storeu</b></span>
+      </a>
+      <a class="store js-soon" href="#" aria-label="Google Play — uskoro">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+        <span><small>Uskoro na</small><b>Google Playu</b></span>
+      </a>
+    </div>
+    <p class="hero-meta reveal" style="--d:.48s"><span>2500+ pitanja</span><b></b><span>Besplatno</span><b></b><span>Bez reklama</span><b></b><span>Na hrvatskom</span></p>
+  </div>
+</header>
+
+<!-- izlog — glavni izbornik izranja ispod heroja -->
+<div class="hero-shot reveal" style="--d:.5s">
+  <div class="frame" id="heroFrame">
+    <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+    <img src="images/hero-izbornik.jpg" alt="Glavni izbornik igre Lumen — kartice Protiv računala, Igraj online, Lokalna igra i Pravila iznad zaljeva u suton" width="1600" height="736">
+  </div>
+</div>
+
+<!-- ==================== TRAKA ==================== -->
+<div class="ribbon" aria-hidden="true">
+  <div class="track" id="ribbonTrack">
+    <span>Znanje je moć <b>◆</b> Od Kmeta do Kralja <b>◆</b> 2500+ pitanja <b>◆</b> Dvoboj znanjem <b>◆</b> Izrađeno u Hrvatskoj <b>◆</b></span>
+  </div>
+</div>
+
+<!-- ==================== ŠTO JE LUMEN ==================== -->
+<section class="sec" id="igra" aria-label="Što je Lumen">
+  <div class="wrap">
+    <p class="eyebrow reveal">Što je Lumen</p>
+    <h2 class="h2 reveal" style="--d:.08s">Ploča je stara stoljećima.<br>Oružje je novo — <em>znanje</em>.</h2>
+    <p class="lead reveal" style="--d:.16s">Lumen spaja napetost strategije i radost kviza u jednu igru:
+      svaka figura sluša samo onoga tko zna odgovor.</p>
+    <div class="orn reveal" style="--d:.22s" aria-hidden="true"><span></span><b></b><span></span></div>
+
+    <div class="cards3">
+      <div class="card reveal" style="--d:.05s">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20h12M7 20l1-9h8l1 9M7 4v4h2V6h2v2h2V6h2v2h2V4M8 8h8"/></svg></div>
+        <h3>Znanje pomiče figure</h3>
+        <p>Odaberi viteza i smjer — a onda dokaži da potez zaslužuješ. Točan odgovor pomiče figuru, netočan je ostavlja na mjestu.</p>
+      </div>
+      <div class="card reveal" style="--d:.15s">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 13 13M4 4v4M4 4h4M20 4 7 17M20 4v4M20 4h-4M3 16l5 5M21 16l-5 5"/></svg></div>
+        <h3>Taktika na svakom polju</h3>
+        <p>Čuvaj svoju zastavu, presijecaj protivnikove putove i pametno biraj trenutak napada — hrabrost bez znanja skupo se plaća.</p>
+      </div>
+      <div class="card reveal" style="--d:.25s">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-1.8-1.6-4.2-2-8-2v14c3.8 0 6.2.4 8 2 1.8-1.6 4.2-2 8-2V4c-3.8 0-6.2.4-8 2zM12 6v14"/></svg></div>
+        <h3>Kviz kakav još nisi igrao</h3>
+        <p>2500+ pitanja na hrvatskom — od sporta i povijesti do umjetnosti i znanosti, složenih u tri razine težine.</p>
+      </div>
+    </div>
+
+    <!-- koraci -->
+    <div class="steps">
+      <div class="step">
+        <div class="step-txt reveal">
+          <div class="stepnum"><b>1</b><span></span></div>
+          <h3>Odgovori točno</h3>
+          <p>Svaki potez otvara pitanje iz kategorije polja na koje ideš. Sat otkucava, a kad zagusti — tu je 50 : 50 da spasi potez.</p>
+        </div>
+        <div class="frame reveal" style="--d:.12s"><img src="images/igra-pitanje.jpg" alt="Ekran pitanja u Lumenu — kategorija Glazba, pitanje s četiri ponuđena odgovora i vremenskom trakom" loading="lazy" width="1600" height="736"></div>
+      </div>
+      <div class="step flip">
+        <div class="step-txt reveal">
+          <div class="stepnum"><b>2</b><span></span></div>
+          <h3>Povuci potez</h3>
+          <p>Pomiči vitezove poljem, zauzimaj položaje i polako steži obruč oko protivničke zastave. Svaka boja polja je druga kategorija znanja.</p>
+        </div>
+        <div class="frame reveal" style="--d:.12s"><img src="images/igra-odabir.jpg" alt="Ploča igre Lumen s viteškim figurama, legendom kategorija i označenim potezima" loading="lazy" width="1600" height="736"></div>
+      </div>
+      <div class="step">
+        <div class="step-txt reveal">
+          <div class="stepnum"><b>3</b><span></span></div>
+          <h3>Osvoji zastavu</h3>
+          <p>Probij obranu i uzmi protivničku zastavu — ili ukloni sve njegove figure. Kruna, naravno, ide najmudrijemu.</p>
+        </div>
+        <div class="frame reveal" style="--d:.12s"><img src="images/igra-pobjeda.jpg" alt="Pobjednički ekran igre Lumen — natpis Pobjeda, vitez na postolju i rezultat 7 : 4" loading="lazy" width="1600" height="736"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DVOBOJ ==================== -->
+<section class="sec duel" id="dvoboj" aria-label="Dvoboj">
+  <div class="wrap">
+    <p class="eyebrow reveal">Srce igre</p>
+    <h2 class="h2 reveal" style="--d:.08s">Dvoboj — <em>pitanje po pitanje</em> do pobjede</h2>
+    <p class="lead reveal" style="--d:.16s">Kad napadneš protivnikovog čuvara, ploča zastane i sve oči okrenu se dvojici boraca.
+      Napad i obrana se izmjenjuju, a svako srce je na kocki.</p>
+
+    <div class="duelbar reveal" style="--d:.2s" aria-label="Napadač protiv branitelja — svaki ima tri srca">
+      <div class="dpill red"><span>Napadač</span>
+        <span class="hearts" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+        </span>
+      </div>
+      <div class="dvs" aria-hidden="true"><span>VS</span></div>
+      <div class="dpill blue"><span>Branitelj</span>
+        <span class="hearts" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="duel-shot reveal" style="--d:.26s">
+      <div class="frame">
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <img src="images/igra-dvoboj.jpg" alt="Dvoboj u Lumenu — Igrač 1 napada, oba igrača imaju tri srca, pitanje s četiri odgovora" loading="lazy" width="1600" height="736">
+      </div>
+    </div>
+
+    <div class="duel-facts">
+      <div class="dfact reveal" style="--d:.05s"><b>Tri srca po borcu</b><span>Netočan odgovor košta srce. Bez srca — poraz i figura napušta ploču.</span></div>
+      <div class="dfact reveal" style="--d:.15s"><b>Kritični udarac</b><span>Dva točna odgovora zaredom zadaju dvostruku štetu. Nizovi se nagrađuju.</span></div>
+      <div class="dfact reveal" style="--d:.25s"><b>Napad i obrana</b><span>Uloge se izmjenjuju svakim pitanjem — nitko nije siguran do zadnjeg srca.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GALERIJA ==================== -->
+<section class="sec" id="galerija" aria-label="Galerija">
+  <div class="wrap">
+    <p class="eyebrow reveal">Galerija</p>
+    <h2 class="h2 reveal" style="--d:.08s">Zavirite u <em>kraljevstvo</em></h2>
+    <p class="lead reveal" style="--d:.16s">Kamene zidine, more u suton i ploča koja čeka prvi potez.</p>
+    <div class="orn reveal" style="--d:.2s" aria-hidden="true"><span></span><b></b><span></span></div>
+  </div>
+  <div class="galwrap reveal" style="--d:.2s">
+    <button class="gbtn prev" id="galPrev" aria-label="Prethodna slika"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="gbtn next" id="galNext" aria-label="Sljedeća slika"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="gal" id="gal">
+      <figure class="slide"><div class="frame"><img src="images/igra-ploca.jpg" alt="Ploča igre Lumen iznad primorskog krajolika — polja u bojama kategorija, vitezovi i zastave" loading="lazy" width="1600" height="736"></div><figcaption>Ploča — svaka boja polja je druga kategorija znanja</figcaption></figure>
+      <figure class="slide"><div class="frame"><img src="images/igra-tocan.jpg" alt="Točan odgovor u Lumenu — odgovor gudači označen zelenom bojom" loading="lazy" width="1600" height="736"></div><figcaption>Točan odgovor — figura kreće naprijed</figcaption></figure>
+      <figure class="slide"><div class="frame"><img src="images/ekran-online.jpg" alt="Ekran Igraj online — unos imena, razina znanja te opcije Stvori igru i Unesi kod" loading="lazy" width="1600" height="736"></div><figcaption>Online 1 na 1 — stvori igru i pošalji kod prijatelju</figcaption></figure>
+      <figure class="slide"><div class="frame"><img src="images/ekran-racunalo.jpg" alt="Ekran Protiv računala s razinama težine protivnika" loading="lazy" width="1600" height="736"></div><figcaption>Protiv računala — četiri razine težine, igraj i treniraj</figcaption></figure>
+      <figure class="slide"><div class="frame"><img src="images/ekran-pravila.jpg" alt="Ekran s pravilima igre Lumen" loading="lazy" width="1600" height="736"></div><figcaption>Pravila — sve što vitez treba znati prije prve bitke</figcaption></figure>
+    </div>
+    <div class="gdots" id="galDots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ==================== KATEGORIJE ==================== -->
+<section class="sec" id="kategorije" aria-label="Kategorije i razine" style="padding-top:20px">
+  <div class="wrap">
+    <p class="eyebrow reveal">Znanje</p>
+    <h2 class="h2 reveal" style="--d:.08s">Osam <em>kraljevstava</em> znanja</h2>
+    <p class="lead reveal" style="--d:.16s">Svako polje na ploči pripada jednoj kategoriji — pobjednik mora znati ponešto o svemu.</p>
+    <div class="orn reveal" style="--d:.2s" aria-hidden="true"><span></span><b></b><span></span></div>
+    <div class="catgrid">
+      <div class="cat reveal" style="--c:#4b63d8;--d:.02s"><i></i>Geografija</div>
+      <div class="cat reveal" style="--c:#8b2fd6;--d:.06s"><i></i>Glazba</div>
+      <div class="cat reveal" style="--c:#e07a1c;--d:.1s"><i></i>Opće znanje</div>
+      <div class="cat reveal" style="--c:#96705c;--d:.14s"><i></i>Povijest</div>
+      <div class="cat reveal" style="--c:#2f8a3f;--d:.18s"><i></i>Priroda</div>
+      <div class="cat reveal" style="--c:#9a962c;--d:.22s"><i></i>Sport</div>
+      <div class="cat reveal" style="--c:#d6218f;--d:.26s"><i></i>Umjetnost</div>
+      <div class="cat reveal" style="--c:#1f8a96;--d:.3s"><i></i>Znanost</div>
+    </div>
+    <div class="lvls">
+      <div class="lvl reveal" style="--d:.05s"><span class="rn">I</span><h3>Osnovna škola</h3><p>Pitanja za mlade vitezove — temelji koje svatko može svladati.</p></div>
+      <div class="lvl reveal" style="--d:.15s"><span class="rn">II</span><h3>Srednja škola</h3><p>Za prekaljene borce — ovdje se već lome koplja i gube srca.</p></div>
+      <div class="lvl reveal" style="--d:.25s"><span class="rn">III</span><h3>Komplicirana</h3><p>Za učenjake i neustrašive — pitanja koja ruše i okrunjene glave.</p></div>
+    </div>
+    <p class="lvl-note reveal" style="--d:.3s">…ili odaberi <b>Sve razine</b> i pusti da te ploča iznenadi.</p>
+  </div>
+</section>
+
+<!-- ==================== NAPREDAK ==================== -->
+<section class="sec" id="napredak" aria-label="Napredak" style="padding-top:30px">
+  <div class="wrap">
+    <p class="eyebrow reveal">Napredak</p>
+    <h2 class="h2 reveal" style="--d:.08s">Od <em>Kmeta</em> do <em>Kralja</em></h2>
+    <p class="lead reveal" style="--d:.16s">Svaki točan odgovor i svaka pobjeda donose iskustvo.
+      Penji se ljestvicom od sedam titula — i ne daj da ti niz izgori.</p>
+
+    <div class="roadwrap reveal" style="--d:.2s">
+      <div class="road" id="road" aria-label="Ljestvica titula od Kmeta do Kralja">
+        <div class="node"><div class="disc">I</div><div class="nm">Kmet</div><div class="xp">0 XP</div></div>
+        <div class="node"><div class="disc">II</div><div class="nm">Vojnik</div><div class="xp">300 XP</div></div>
+        <div class="node"><div class="disc">III</div><div class="nm">Vitez</div><div class="xp">800 XP</div></div>
+        <div class="node"><div class="disc">IV</div><div class="nm">Plemić</div><div class="xp">1 800 XP</div></div>
+        <div class="node"><div class="disc">V</div><div class="nm">Knez</div><div class="xp">3 800 XP</div></div>
+        <div class="node"><div class="disc">VI</div><div class="nm">Ban</div><div class="xp">7 000 XP</div></div>
+        <div class="node"><div class="crown"><svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-6 5 6 4-4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z"/></svg></div><div class="disc">VII</div><div class="nm">Kralj</div><div class="xp">12 000 XP</div></div>
+      </div>
+    </div>
+
+    <div class="prog-feats">
+      <div class="pfeat reveal" style="--d:.05s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3-3 4.5-3 8a3.5 3.5 0 0 0 7 0c0-1.2-.5-2.2-1-3-.3 1-.8 1.5-1.5 2C14 7 15 5 12 3zM8.5 15.5A5 5 0 0 0 12 21a5 5 0 0 0 3.5-5.5"/></svg>
+        <div><b>Dnevni niz</b><span>Igraj svaki dan i čuvaj plamen — niz donosi dodatno iskustvo.</span></div>
+      </div>
+      <div class="pfeat reveal" style="--d:.15s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>
+        <div><b>Izazovi</b><span>Tri su izazova uvijek aktivna — riješi ih za nagradu i odmah stižu novi.</span></div>
+      </div>
+      <div class="pfeat reveal" style="--d:.25s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+        <div><b>Statistika</b><span>Točnost, najbolji kombo, pobjede — sve se pamti i broji na tvom putu.</span></div>
+      </div>
+    </div>
+
+    <div class="prog-shot reveal" style="--d:.15s">
+      <div class="frame">
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <img src="images/ekran-napredak.jpg" alt="Ekran Napredak u Lumenu — rang Kmet, XP traka, statistika te tri aktivna izazova" loading="lazy" width="1600" height="736">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== POVJERENJE ==================== -->
+<section class="trust" aria-label="Bez sitnih slova">
+  <div class="wrap trust-in">
+    <div class="titem reveal" style="--d:.02s">
+      <div class="tico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2A3.4 3.4 0 0 0 12 8c-2 0-3.6 1.8-3.6 4s1.6 4 3.6 4a3.4 3.4 0 0 0 2.8-1.2"/></svg></div>
+      <b>Besplatna zauvijek</b><span>bez skrivenih troškova</span>
+    </div>
+    <div class="titem reveal" style="--d:.1s">
+      <div class="tico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6l-6 4H4z"/><path d="M19 5 5 19" stroke="#ea4458"/></svg></div>
+      <b>Bez reklama</b><span>ništa ne prekida igru</span>
+    </div>
+    <div class="titem reveal" style="--d:.18s">
+      <div class="tico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h13l-1.5 8h-10L4 4H2"/><circle cx="8" cy="19.5" r="1.4"/><circle cx="14" cy="19.5" r="1.4"/><path d="M21 5 9 17" stroke="#ea4458"/></svg></div>
+      <b>Bez kupnji</b><span>sve je otključano od prvog dana</span>
+    </div>
+    <div class="titem reveal" style="--d:.26s">
+      <div class="tico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-4 0-8-2.5-8-7V7l8-4 8 4v7c0 4.5-4 7-8 7z"/><path d="m8.6 12 2.3 2.3 4.5-4.6"/></svg></div>
+      <b>Na hrvatskom</b><span>svih 2500+ pitanja</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section class="sec" id="faq" aria-label="Česta pitanja">
+  <div class="wrap">
+    <p class="eyebrow reveal">Česta pitanja</p>
+    <h2 class="h2 reveal" style="--d:.08s">Prije nego <em>zamahneš mačem</em></h2>
+    <div class="orn reveal" style="--d:.14s" aria-hidden="true"><span></span><b></b><span></span></div>
+    <div class="faq reveal" style="--d:.2s">
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Kada Lumen izlazi?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Uskoro — igra je gotova i u završnim je pripremama za App Store i Google Play. Čim se vrata otvore, gumbi na vrhu ove stranice postat će pravi.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Je li igra stvarno besplatna?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Da — potpuno. Bez reklama, bez kupnji u aplikaciji, bez pretplata. Sve što igra nudi dostupno je svima od prvog dana.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Mogu li igrati bez interneta?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Možeš — partije protiv računala i lokalna igra za dva igrača na istom uređaju rade i bez veze. Internet ti treba samo za online dvoboje 1 na 1.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Kako igram online s prijateljem?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Jednostavno: stvoriš igru, dobiješ kratki kod i pošalješ ga prijatelju. On unese kod — i dvoboj može početi, bez registracije i lozinki.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Za koga je Lumen?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Za sve koji vole znati. Tri razine težine — Osnovna škola, Srednja škola i Komplicirana — znače da ravnopravno igraju i osmaši i profesori. Odlična je i za obiteljske turnire za stolom.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false"><span>Hoće li biti novih pitanja?</span><span class="pl" aria-hidden="true"></span></button>
+        <div class="fa"><p>Hoće. Baza već broji više od 2500 pitanja na hrvatskom i nastavlja rasti s nadogradnjama — a imaš li prijedlog, <a href="mailto:ilisinleon@gmail.com">javi se</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ZAVRŠNI CTA ==================== -->
+<section class="sec cta" id="preuzmi" aria-label="Preuzimanje">
+  <div class="rays" aria-hidden="true"><i></i><i></i></div>
+  <div class="wrap">
+    <div class="seal reveal"><img src="images/grb.png" alt="" width="900" height="900" loading="lazy"></div>
+    <h2 class="h2 reveal" style="--d:.08s">Kruna čeka onoga <em>tko zna</em>.</h2>
+    <p class="lead reveal" style="--d:.16s">Lumen uskoro stiže na App Store i Google Play — besplatno.
+      Dotad naoštri znanje: ploča se ne osvaja srećom.</p>
+    <div class="stores reveal" style="--d:.24s">
+      <a class="store js-soon" href="#" aria-label="App Store — uskoro">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span><small>Uskoro u</small><b>App Storeu</b></span>
+      </a>
+      <a class="store js-soon" href="#" aria-label="Google Play — uskoro">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+        <span><small>Uskoro na</small><b>Google Playu</b></span>
+      </a>
+    </div>
+    <p class="cta-note reveal" style="--d:.32s">Želiš obavijest na dan izlaska? <a href="mailto:ilisinleon@gmail.com?subject=Lumen%20—%20javite%20mi%20kad%20iza%C4%91e">Javi nam se</a> — pošaljemo ti poruku.</p>
+  </div>
+</section>
+
+<!-- ==================== PODNOŽJE ==================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="fbrand"><img src="images/favicon.png" alt="" width="42" height="42"><b>LUMEN</b></div>
+        <p>Borba znanjem — hrvatska igra znanja i strategije na šahovskoj ploči. Znanje je jedina valuta koja ovdje vrijedi.</p>
+      </div>
+      <div>
+        <h4>Stranice</h4>
+        <ul>
+          <li><a href="#igra">Igra</a></li>
+          <li><a href="#dvoboj">Dvoboj</a></li>
+          <li><a href="#galerija">Galerija</a></li>
+          <li><a href="#napredak">Napredak</a></li>
+          <li><a href="#preuzmi">Preuzimanje</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt i pravno</h4>
+        <ul>
+          <li><a href="mailto:ilisinleon@gmail.com">ilisinleon@gmail.com</a></li>
+          <li><a class="js-privacy" href="#">Pravila privatnosti</a></li>
+        </ul>
+        <div class="socials" style="margin-top:20px">
+          <a class="js-soon" href="#" aria-label="TikTok — uskoro"><svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.3v178.8A162.6 162.6 0 1 1 185 188.3v89.9a74.6 74.6 0 1 0 52.2 71.2V0h88a121 121 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
+          <a class="js-soon" href="#" aria-label="Instagram — uskoro"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr">2026</span> Lumen. Sva prava pridržana.</span>
+      <span class="hrmade">Izrađeno u Hrvatskoj
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <defs><pattern id="sah" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="3" height="3" fill="#d21f31"/><rect x="3" width="3" height="3" fill="#f3ede0"/>
+            <rect y="3" x="3" width="3" height="3" fill="#d21f31"/><rect y="3" width="3" height="3" fill="#f3ede0"/>
+          </pattern></defs>
+          <path fill="url(#sah)" stroke="#d9ab4a" stroke-width="1" d="M12 21S3.5 15.6 1.7 10.8C.4 7.4 2.3 4.2 5.6 3.7c2.3-.4 4.6.8 6.4 3.1 1.8-2.3 4.1-3.5 6.4-3.1 3.3.5 5.2 3.7 3.9 7.1C20.5 15.6 12 21 12 21z"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== MODAL: USKORO ==================== -->
+<div class="modal" id="modal-soon" role="dialog" aria-modal="true" aria-labelledby="soonTitle">
+  <div class="modal-back" data-close></div>
+  <div class="modal-panel">
+    <button class="modal-x" data-close aria-label="Zatvori"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="modal-body">
+      <div class="modal-seal"><img src="images/favicon.png" alt="" width="84" height="84"></div>
+      <h3 class="modal-title" id="soonTitle">Lumen <em>uskoro</em> stiže!</h3>
+      <p class="modal-text" id="soonText">Igra je gotova i upravo prolazi završne provjere za App Store i Google Play.</p>
+      <div class="modal-orn" aria-hidden="true"><span></span><b></b><span></span></div>
+      <a class="modal-cta" href="mailto:ilisinleon@gmail.com?subject=Lumen%20—%20javite%20mi%20kad%20iza%C4%91e">Javi nam se</a>
+      <p class="modal-note">Pošalji nam poruku i javit ćemo ti na dan izlaska. 👑</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PRAVILA PRIVATNOSTI ==================== -->
+<div class="modal" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privTitle">
+  <div class="modal-back" data-close></div>
+  <div class="modal-panel wide">
+    <button class="modal-x" data-close aria-label="Zatvori"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="modal-body doc">
+      <h3 id="privTitle">Pravila privatnosti — Lumen: Borba znanjem</h3>
+      <p class="doc-date">Zadnja izmjena: 9. srpnja 2026.</p>
+      <p class="strong">Lumen ne prikuplja, ne pohranjuje i ne dijeli nikakve osobne podatke.</p>
+      <ul>
+        <li>Igra ne traži registraciju ni prijavu.</li>
+        <li>Napredak (XP, rangovi, izazovi) sprema se isključivo lokalno na vašem uređaju.</li>
+        <li>Online igra: prilikom partije 1 na 1 poslužitelj privremeno prenosi poteze između dva igrača. Ništa se ne pohranjuje: ni imena, ni IP adrese, ni sadržaj partija. Sobe se brišu iz memorije čim partija završi.</li>
+        <li>Igra ne sadrži reklame, analitiku trećih strana ni praćenje.</li>
+        <li>Igra je primjerena svim uzrastima.</li>
+      </ul>
+      <p>Kontakt: <a href="mailto:ilisinleon@gmail.com">ilisinleon@gmail.com</a></p>
+      <div class="doc-div" aria-hidden="true"><span></span><b></b><span></span></div>
+      <h3>Privacy Policy — Lumen: Borba znanjem</h3>
+      <p class="doc-date">Last updated: July 9, 2026</p>
+      <p class="strong">Lumen does not collect, store, or share any personal data.</p>
+      <ul>
+        <li>No registration or login required.</li>
+        <li>Progress (XP, ranks, quests) is stored locally on your device only.</li>
+        <li>Online play: during a 1v1 match, a relay server temporarily forwards moves between the two players. Nothing is stored: no names, no IP logs, no match content. Rooms are deleted from memory when a match ends.</li>
+        <li>No ads, no third-party analytics, no tracking.</li>
+        <li>Suitable for all ages.</li>
+      </ul>
+      <p>Contact: <a href="mailto:ilisinleon@gmail.com">ilisinleon@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* način za snimanje ekrana (aktivan samo uz ?shot=...) */
+  var shot = new URLSearchParams(location.search).get("shot");
+  if (shot) {
+    rm = true;
+    document.documentElement.style.scrollBehavior = "auto";
+    var st = document.createElement("style");
+    st.textContent = ".reveal{opacity:1!important;transform:none!important}" +
+      (shot === "full" ? ".hero{min-height:auto!important;padding-top:150px!important}.hero-shot{margin-top:36px!important}" : "");
+    document.head.appendChild(st);
+    document.querySelectorAll(".node").forEach(function(n){ n.classList.add("lit"); });
+    if (shot !== "full" && shot !== "top") {
+      window.addEventListener("load", function(){
+        var t = document.getElementById(shot);
+        if (!t) return;
+        if (t.classList.contains("modal")) { t.classList.add("open"); document.body.classList.add("modal-open"); }
+        else window.scrollTo(0, t.offsetTop - 70);
+      });
+    }
+  }
+
+  /* navigacija — staklo nakon skrolanja */
+  var nav = document.getElementById("nav");
+  function onNav(){ nav.classList.toggle("scrolled", window.scrollY > 30); }
+  window.addEventListener("scroll", onNav, {passive:true}); onNav();
+
+  /* otkrivanje elemenata */
+  var revs = document.querySelectorAll(".reveal");
+  if (rm || !("IntersectionObserver" in window)) {
+    revs.forEach(function(el){ el.classList.add("on"); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("on"); io.unobserve(e.target);} });
+    }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+    revs.forEach(function(el){ io.observe(el); });
+  }
+
+  /* traka — udvostruči sadržaj za besprijekornu petlju */
+  var tr = document.getElementById("ribbonTrack");
+  if (tr) tr.innerHTML += tr.innerHTML;
+
+  /* galerija */
+  var gal = document.getElementById("gal");
+  if (gal) {
+    var slides = gal.querySelectorAll(".slide");
+    var dotsBox = document.getElementById("galDots");
+    slides.forEach(function(_,i){
+      var d = document.createElement("i"); if(i===0) d.className="on"; dotsBox.appendChild(d);
+    });
+    var dots = dotsBox.children;
+    var upd = function(){
+      var mid = gal.scrollLeft + gal.clientWidth/2, best = 0, bd = 1e9;
+      slides.forEach(function(s,i){
+        var c = s.offsetLeft + s.offsetWidth/2, dd = Math.abs(c-mid);
+        if(dd<bd){bd=dd;best=i;}
+      });
+      for(var i=0;i<dots.length;i++) dots[i].classList.toggle("on", i===best);
+    };
+    var st; gal.addEventListener("scroll", function(){ clearTimeout(st); st=setTimeout(upd,80); }, {passive:true});
+    var go = function(dir){
+      var w = slides[0].getBoundingClientRect().width + 24;
+      gal.scrollBy({left:dir*w, behavior: rm ? "auto" : "smooth"});
+    };
+    document.getElementById("galPrev").addEventListener("click", function(){go(-1);});
+    document.getElementById("galNext").addEventListener("click", function(){go(1);});
+  }
+
+  /* ljestvica rangova — pali se čvor po čvor */
+  var road = document.getElementById("road");
+  if (road) {
+    var nodes = road.querySelectorAll(".node");
+    var light = function(){
+      nodes.forEach(function(n,i){
+        setTimeout(function(){ n.classList.add("lit"); }, rm ? 0 : 160*i);
+      });
+    };
+    if (rm || !("IntersectionObserver" in window)) light();
+    else {
+      var ro = new IntersectionObserver(function(es){
+        if(es[0].isIntersecting){ light(); ro.disconnect(); }
+      }, {threshold:.35});
+      ro.observe(road);
+    }
+  }
+
+  /* FAQ harmonika */
+  document.querySelectorAll(".fitem").forEach(function(item){
+    var btn = item.querySelector(".fq"), panel = item.querySelector(".fa");
+    btn.addEventListener("click", function(){
+      var open = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      panel.style.maxHeight = open ? panel.scrollHeight + "px" : "0px";
+    });
+  });
+
+  /* modali — uskoro + pravila privatnosti */
+  var openedModal = null;
+  function openModal(id){
+    var m = document.getElementById(id);
+    if (!m) return;
+    m.classList.add("open");
+    document.body.classList.add("modal-open");
+    openedModal = m;
+    var x = m.querySelector(".modal-x");
+    if (x) x.focus();
+  }
+  function closeModal(){
+    if (!openedModal) return;
+    openedModal.classList.remove("open");
+    document.body.classList.remove("modal-open");
+    openedModal = null;
+  }
+  document.querySelectorAll(".modal [data-close]").forEach(function(el){
+    el.addEventListener("click", closeModal);
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeModal();
+  });
+  var soonText = document.getElementById("soonText");
+  var TXT_STORE = "Igra je gotova i upravo prolazi završne provjere za App Store i Google Play.";
+  var TXT_SOCIAL = "Profili na TikToku i Instagramu kreću s izlaskom igre — još samo malo!";
+  document.querySelectorAll(".js-soon").forEach(function(a){
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      var l = (a.getAttribute("aria-label")||"");
+      var social = l.indexOf("TikTok")>-1 || l.indexOf("Instagram")>-1;
+      if (soonText) soonText.textContent = social ? TXT_SOCIAL : TXT_STORE;
+      openModal("modal-soon");
+    });
+  });
+  document.querySelectorAll(".js-privacy").forEach(function(a){
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      openModal("modal-privacy");
+    });
+  });
+
+  /* godina u podnožju */
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>
