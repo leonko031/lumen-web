@@ -107,9 +107,14 @@ section{position:relative;scroll-margin-top:84px}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease var(--d,0s),transform .8s cubic-bezier(.22,.7,.3,1) var(--d,0s)}
 .reveal.on{opacity:1;transform:none}
 
+/* ============ TRAKA NAPRETKA ============ */
+.progress{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:120;pointer-events:none;
+  background:linear-gradient(90deg,#c9942f,#f6d98a 50%,#c9942f);
+  transform-origin:0 50%;transform:scaleX(0)}
+
 /* ============ NAVIGACIJA ============ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .35s,border-color .35s;
-  border-bottom:1px solid transparent}
+.nav{position:fixed;top:0;left:0;right:0;z-index:106;transition:background .35s,border-color .35s;
+  border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top)}
 .nav.scrolled{background:rgba(6,10,18,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:var(--line-soft)}
 .nav-in{width:min(1240px,94vw);margin:0 auto;display:flex;align-items:center;gap:26px;padding:13px 0}
 .brand{display:flex;align-items:center;gap:11px;margin-right:auto}
@@ -126,11 +131,64 @@ section{position:relative;scroll-margin-top:84px}
   box-shadow:0 6px 22px rgba(213,168,68,.32),inset 0 1px 0 rgba(255,255,255,.5);
   transition:transform .25s,box-shadow .25s,filter .25s}
 .btn-gold:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 10px 28px rgba(213,168,68,.42),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-gold:active,.store:active,.modal-cta:active,.wl-btn:active{transform:translateY(0) scale(.97)}
 @media(min-width:920px){.nav-links{display:flex}}
+@media(max-width:400px){.nav .btn-gold{padding:9px 16px;font-size:13.5px}.nav-in{gap:14px}}
+
+/* hamburger */
+.burger{display:none;width:42px;height:42px;flex:none;border:1px solid var(--line);border-radius:50%;
+  background:rgba(8,13,24,.6);cursor:pointer;place-items:center;transition:border-color .25s,background .25s}
+.burger:hover{border-color:var(--gold-hi)}
+.burger i{position:relative;width:17px;height:12px;display:block}
+.burger i::before,.burger i::after{content:"";position:absolute;left:0;right:0;height:1.8px;border-radius:2px;
+  background:var(--gold-hi);transition:transform .35s,top .35s,bottom .35s}
+.burger i::before{top:0}
+.burger i::after{bottom:0}
+body.menu-open .burger i::before{top:5px;transform:rotate(45deg)}
+body.menu-open .burger i::after{bottom:5.2px;transform:rotate(-45deg)}
+@media(max-width:919px){.burger{display:grid}}
+
+/* meni preko cijelog ekrana */
+.menu{position:fixed;inset:0;z-index:104;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;background:rgba(4,7,13,.93);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  visibility:hidden;opacity:0;transition:opacity .35s,visibility .35s;padding:80px 20px 40px;overflow-y:auto}
+.menu.open{visibility:visible;opacity:1}
+.menu .mseal{width:58px;margin-bottom:16px}
+.menu .mseal img{border-radius:50%;border:1px solid rgba(246,217,138,.5);box-shadow:0 0 0 4px rgba(217,171,74,.1)}
+.menu .mlink{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(24px,6.4vw,32px);
+  color:var(--ink);padding:8px 22px;letter-spacing:.05em;font-weight:600;
+  opacity:0;transform:translateY(16px);transition:opacity .45s var(--md,0s),transform .45s cubic-bezier(.22,.7,.3,1) var(--md,0s),color .25s}
+.menu.open .mlink{opacity:1;transform:none}
+.menu .mlink:hover{color:var(--gold-hi)}
+.menu .mdot{width:5px;height:5px;background:rgba(217,171,74,.4);transform:rotate(45deg);margin:2px 0;
+  opacity:0;transition:opacity .5s var(--md,0s)}
+.menu.open .mdot{opacity:1}
+.menu .mget{margin-top:20px;opacity:0;transform:translateY(16px);transition:opacity .45s .32s,transform .45s .32s}
+.menu.open .mget{opacity:1;transform:none}
+.menu .mnote{margin-top:22px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);
+  opacity:0;transition:opacity .5s .4s}
+.menu.open .mnote{opacity:1}
+body.menu-open{overflow:hidden}
+
+/* plutajuća donja traka (mobitel) */
+.mcta{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:102;
+  display:none;align-items:center;gap:12px;padding:10px 12px 10px 15px;border-radius:18px;
+  border:1px solid var(--line);background:rgba(8,13,24,.9);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 14px 40px rgba(0,0,0,.55);
+  transform:translateY(140%);transition:transform .45s cubic-bezier(.22,.7,.3,1)}
+.mcta.show{transform:none}
+.mcta img{width:36px;height:36px;flex:none;border-radius:9px;border:1px solid var(--line)}
+.mcta .t{flex:1;min-width:0}
+.mcta .t b{display:block;font-family:"Hoefler Text",Palatino,Georgia,serif;color:var(--ink);font-size:14.5px;line-height:1.3;font-weight:600}
+.mcta .t small{color:var(--mut);font-size:11.5px}
+.mcta .btn-gold{padding:10px 17px;font-size:13.5px;flex:none}
+@media(max-width:759px){.mcta{display:flex}}
+body.menu-open .mcta,body.modal-open .mcta{transform:translateY(140%)}
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:calc(100svh - 44px);display:flex;flex-direction:column;justify-content:center;
-  padding:104px 0 56px;background:#04070d;overflow:hidden}
+  padding:104px 0 clamp(128px,11vw,170px);background:#04070d;overflow:hidden}
 .hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .hero-bg::before{content:"";position:absolute;left:-4%;right:-4%;top:-4%;height:min(122vh,1250px);
   background:url("images/hero-bg.jpg") 46% 30%/cover no-repeat;
@@ -185,7 +243,7 @@ section{position:relative;scroll-margin-top:84px}
   box-shadow:0 0 0 6px rgba(217,171,74,.10),0 0 0 7px rgba(217,171,74,.22),0 16px 50px rgba(0,0,0,.65)}
 .hero h1{
   font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
-  font-size:clamp(70px,13.5vw,164px);line-height:1;font-weight:700;letter-spacing:.14em;text-indent:.14em;
+  font-size:clamp(64px,16.5vw,164px);line-height:1;font-weight:700;letter-spacing:.14em;text-indent:.14em;
   background:linear-gradient(100deg,#f9e7ab 0%,#ecc46e 15%,#c9942f 30%,#f2d78d 41%,#c9942f 55%,#fff3cf 63%,#c9942f 71%,#ecc46e 85%,#f9e7ab 100%);
   background-size:240% 100%;background-position:0% 0;
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -208,6 +266,7 @@ section{position:relative;scroll-margin-top:84px}
 .hero-meta b{width:5px;height:5px;flex:none;background:rgba(217,171,74,.55);transform:rotate(45deg)}
 
 .stores{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:36px}
+@media(max-width:560px){.stores{flex-direction:column;align-items:stretch;max-width:300px;margin-left:auto;margin-right:auto}.store{justify-content:center}}
 .store{
   display:flex;align-items:center;gap:13px;text-align:left;
   border:1px solid var(--line);border-radius:15px;padding:11px 22px 11px 17px;
@@ -379,6 +438,13 @@ section{position:relative;scroll-margin-top:84px}
 /* ============ NAPREDAK ============ */
 .roadwrap{overflow-x:auto;margin-top:60px;padding-bottom:8px;scrollbar-width:none}
 .roadwrap::-webkit-scrollbar{display:none}
+.road-hint{display:none;text-align:center;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mut);margin-top:14px}
+@media(max-width:700px){
+  .road-hint{display:block}
+  .roadwrap{-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+}
 .road{display:flex;min-width:660px;position:relative;padding-top:34px}
 .road::before{content:"";position:absolute;top:58px;left:7%;right:7%;height:2px;
   background:linear-gradient(90deg,rgba(217,171,74,.5),rgba(217,171,74,.18))}
@@ -483,6 +549,14 @@ footer{border-top:1px solid var(--line-soft);background:#04070d;padding:56px 0 4
   box-shadow:0 50px 120px rgba(0,0,0,.7),0 0 0 1px rgba(246,217,138,.08);
   transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.22,.7,.3,1)}
 .modal.open .modal-panel{transform:none}
+@media(max-width:640px){
+  .modal{padding:0;align-items:flex-end}
+  .modal-panel{width:100%;max-height:88vh;border-radius:24px 24px 0 0;border-bottom:none;
+    transform:translateY(60px);padding-bottom:env(safe-area-inset-bottom)}
+  .modal-panel::before{border-radius:19px 19px 0 0;border-bottom:none}
+  .modal-body{padding:40px 24px 34px}
+  .modal-body.doc{padding:42px 24px 34px}
+}
 .modal-panel::before{content:"";position:absolute;inset:5px;border:1px solid rgba(217,171,74,.18);
   border-radius:15px;pointer-events:none;z-index:1}
 .modal-x{position:absolute;top:14px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;
@@ -512,7 +586,7 @@ footer{border-top:1px solid var(--line-soft);background:#04070d;padding:56px 0 4
 /* lista čekanja */
 .wl-form{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:480px;margin:0 auto}
 .wl-form input{flex:1;min-width:210px;border-radius:999px;border:1px solid var(--line);
-  background:rgba(5,9,16,.65);padding:13px 22px;color:var(--ink);font-size:15px;outline:none;
+  background:rgba(5,9,16,.65);padding:13px 22px;color:var(--ink);font-size:16px;outline:none;
   transition:border-color .25s,box-shadow .25s;font-family:inherit}
 .wl-form input::placeholder{color:var(--mut)}
 .wl-form input:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,171,74,.15)}
@@ -554,6 +628,7 @@ body.modal-open{overflow:hidden}
 <body>
 <a class="skip" href="#igra">Preskoči na sadržaj</a>
 <div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <!-- ==================== NAVIGACIJA ==================== -->
 <nav class="nav" id="nav" aria-label="Glavna navigacija">
@@ -572,8 +647,31 @@ body.modal-open{overflow:hidden}
       <a href="prijedlozi.html">Prijedlozi</a>
     </div>
     <a class="btn-gold" href="#preuzmi">Preuzmi</a>
+    <button class="burger" id="burger" aria-label="Otvori izbornik" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </nav>
+
+<!-- ==================== MOBILNI IZBORNIK ==================== -->
+<div class="menu" id="menu" aria-label="Izbornik">
+  <div class="mseal"><img src="images/favicon.png" alt="" width="58" height="58"></div>
+  <a class="mlink" style="--md:.04s" href="#igra">Igra</a>
+  <a class="mlink" style="--md:.08s" href="#dvoboj">Dvoboj</a>
+  <a class="mlink" style="--md:.12s" href="#galerija">Galerija</a>
+  <a class="mlink" style="--md:.16s" href="#kategorije">Kategorije</a>
+  <a class="mlink" style="--md:.2s" href="#napredak">Napredak</a>
+  <a class="mlink" style="--md:.24s" href="#faq">Pitanja</a>
+  <a class="mlink" style="--md:.28s" href="prijedlozi.html">Prijedlozi</a>
+  <span class="mdot" style="--md:.3s" aria-hidden="true"></span>
+  <a class="btn-gold mget" href="#preuzmi">Preuzmi igru</a>
+  <p class="mnote">Borba znanjem · Izrađeno u Hrvatskoj</p>
+</div>
+
+<!-- ==================== DONJA TRAKA (MOBITEL) ==================== -->
+<div class="mcta" id="mcta">
+  <img src="images/favicon.png" alt="" width="36" height="36">
+  <div class="t"><b>Lumen uskoro stiže</b><small>besplatno · bez reklama</small></div>
+  <a class="btn-gold js-soon" href="#" aria-label="Lista čekanja">Upiši se</a>
+</div>
 
 <!-- ==================== HERO ==================== -->
 <header class="hero" id="vrh">
@@ -801,6 +899,7 @@ body.modal-open{overflow:hidden}
         <div class="node"><div class="crown"><svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-6 5 6 4-4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z"/></svg></div><div class="disc">VII</div><div class="nm">Kralj</div><div class="xp">12 000 XP</div></div>
       </div>
     </div>
+    <p class="road-hint" aria-hidden="true">◆ povuci prstom kroz sve titule ◆</p>
 
     <div class="prog-feats">
       <div class="pfeat reveal" style="--d:.05s">
@@ -1033,6 +1132,15 @@ body.modal-open{overflow:hidden}
     document.querySelectorAll(".node").forEach(function(n){ n.classList.add("lit"); });
     if (shot !== "full" && shot !== "top") {
       window.addEventListener("load", function(){
+        if (shot === "menu") {
+          document.getElementById("menu").classList.add("open");
+          document.body.classList.add("menu-open");
+          return;
+        }
+        if (shot === "mcta") {
+          document.getElementById("mcta").classList.add("show");
+          return;
+        }
         var t = document.getElementById(shot);
         if (!t) return;
         if (t.classList.contains("modal")) { t.classList.add("open"); document.body.classList.add("modal-open"); }
@@ -1041,10 +1149,59 @@ body.modal-open{overflow:hidden}
     }
   }
 
-  /* navigacija — staklo nakon skrolanja */
+  /* navigacija — staklo nakon skrolanja + traka napretka */
   var nav = document.getElementById("nav");
-  function onNav(){ nav.classList.toggle("scrolled", window.scrollY > 30); }
-  window.addEventListener("scroll", onNav, {passive:true}); onNav();
+  var prog = document.getElementById("progress");
+  var ticking = false;
+  function onNav(){
+    nav.classList.toggle("scrolled", window.scrollY > 30);
+    if (prog) {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = "scaleX(" + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ")";
+    }
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if (!ticking) { ticking = true; requestAnimationFrame(onNav); }
+  }, {passive:true}); onNav();
+
+  /* mobilni izbornik */
+  var burger = document.getElementById("burger");
+  var menu = document.getElementById("menu");
+  function toggleMenu(open){
+    var on = (typeof open === "boolean") ? open : !menu.classList.contains("open");
+    menu.classList.toggle("open", on);
+    document.body.classList.toggle("menu-open", on);
+    burger.setAttribute("aria-expanded", on ? "true" : "false");
+    burger.setAttribute("aria-label", on ? "Zatvori izbornik" : "Otvori izbornik");
+  }
+  burger.addEventListener("click", function(){ toggleMenu(); });
+  menu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){ toggleMenu(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && menu.classList.contains("open")) toggleMenu(false);
+  });
+
+  /* donja traka na mobitelu — pojavi se nakon heroja, sakrij pri kraju */
+  var mcta = document.getElementById("mcta");
+  var hero = document.querySelector(".hero");
+  var nearEnd = false;
+  if (mcta && "IntersectionObserver" in window) {
+    var endIO = new IntersectionObserver(function(es){
+      nearEnd = es.some(function(e){ return e.isIntersecting; });
+      updMcta();
+    }, {rootMargin:"0px 0px 120px 0px"});
+    var pz = document.getElementById("preuzmi");
+    if (pz) endIO.observe(pz);
+    var ft = document.querySelector("footer");
+    if (ft) endIO.observe(ft);
+  }
+  function updMcta(){
+    if (!mcta) return;
+    mcta.classList.toggle("show", window.scrollY > (hero ? hero.offsetHeight * .85 : 600) && !nearEnd);
+  }
+  window.addEventListener("scroll", updMcta, {passive:true}); updMcta();
 
   /* otkrivanje elemenata */
   var revs = document.querySelectorAll(".reveal");
