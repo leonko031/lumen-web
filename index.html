@@ -363,6 +363,18 @@ section{position:relative;scroll-margin-top:84px}
 .lvl p{font-size:15px}
 .lvl-note{text-align:center;margin-top:30px;font-size:15px;color:var(--mut);font-style:italic}
 .lvl-note b{color:var(--gold-hi);font-weight:600}
+/* poziv na prijedloge */
+.contrib{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;
+  margin-top:64px;padding:clamp(24px,3.5vw,34px) clamp(24px,4vw,42px);
+  border:1px solid var(--line);border-radius:20px;position:relative;overflow:hidden;
+  background:linear-gradient(120deg,rgba(217,171,74,.10),rgba(217,171,74,.03) 45%,rgba(194,32,48,.06))}
+.contrib::before{content:"";position:absolute;inset:4px;border:1px solid rgba(217,171,74,.14);border-radius:15px;pointer-events:none}
+.contrib-txt{max-width:56ch}
+.contrib-txt b{display:block;font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(19px,2.6vw,24px);
+  color:var(--ink);font-weight:600;margin-bottom:6px}
+.contrib-txt span{font-size:15px;color:var(--body)}
+.contrib .btn-gold{flex:none;font-size:15.5px;padding:13px 30px}
+@media(max-width:700px){.contrib{justify-content:center;text-align:center}}
 
 /* ============ NAPREDAK ============ */
 .roadwrap{overflow-x:auto;margin-top:60px;padding-bottom:8px;scrollbar-width:none}
@@ -557,6 +569,7 @@ body.modal-open{overflow:hidden}
       <a href="#kategorije">Kategorije</a>
       <a href="#napredak">Napredak</a>
       <a href="#faq">Pitanja</a>
+      <a href="prijedlozi.html">Prijedlozi</a>
     </div>
     <a class="btn-gold" href="#preuzmi">Preuzmi</a>
   </div>
@@ -758,6 +771,14 @@ body.modal-open{overflow:hidden}
       <div class="lvl reveal" style="--d:.25s"><span class="rn">III</span><h3>Komplicirana</h3><p>Za učenjake i neustrašive — pitanja koja ruše i okrunjene glave.</p></div>
     </div>
     <p class="lvl-note reveal" style="--d:.3s">…ili odaberi <b>Sve razine</b> i pusti da te ploča iznenadi.</p>
+
+    <div class="contrib reveal" style="--d:.1s">
+      <div class="contrib-txt">
+        <b>Znaš pitanje koje bi srušilo i kralja?</b>
+        <span>Pomozi nam izgraditi najbolju bazu znanja — predloži pitanje, prijavi grešku ili podijeli ideju.</span>
+      </div>
+      <a class="btn-gold" href="prijedlozi.html">Pošalji prijedlog</a>
+    </div>
   </div>
 </section>
 
@@ -856,7 +877,7 @@ body.modal-open{overflow:hidden}
       </div>
       <div class="fitem">
         <button class="fq" aria-expanded="false"><span>Hoće li biti novih pitanja?</span><span class="pl" aria-hidden="true"></span></button>
-        <div class="fa"><p>Hoće. Baza već broji više od 2500 pitanja na hrvatskom i nastavlja rasti s nadogradnjama — a imaš li prijedlog, <a href="mailto:ilisinleon@gmail.com">javi se</a>.</p></div>
+        <div class="fa"><p>Hoće. Baza već broji više od 2500 pitanja na hrvatskom i nastavlja rasti s nadogradnjama — a imaš li dobro pitanje, <a href="prijedlozi.html">predloži ga ovdje</a> i pomozi graditi bazu.</p></div>
       </div>
     </div>
   </div>
@@ -907,6 +928,7 @@ body.modal-open{overflow:hidden}
           <li><a href="#dvoboj">Dvoboj</a></li>
           <li><a href="#galerija">Galerija</a></li>
           <li><a href="#napredak">Napredak</a></li>
+          <li><a href="prijedlozi.html">Prijedlozi</a></li>
           <li><a href="#preuzmi">Preuzimanje</a></li>
         </ul>
       </div>

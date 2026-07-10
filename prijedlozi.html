@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prijedlozi — Lumen: Borba znanjem</title>
+<meta name="description" content="Pomozi graditi Lumen: predloži pitanje za bazu znanja, prijavi grešku ili podijeli ideju za igru.">
+<meta name="theme-color" content="#060b14">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pomozi graditi Lumen">
+<meta property="og:description" content="Predloži pitanje, prijavi grešku ili podijeli ideju — najbolja pitanja piše kraljevstvo.">
+<meta property="og:image" content="images/grb.png">
+<meta property="og:locale" content="hr_HR">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<style>
+:root{
+  --bg0:#050910;
+  --panel:#0b1424;
+  --panel-hi:#101c33;
+  --gold:#d9ab4a;
+  --gold-hi:#f6d98a;
+  --line:rgba(217,171,74,.26);
+  --line-soft:rgba(217,171,74,.14);
+  --ink:#f2e9d3;
+  --body:#aeb9ce;
+  --mut:#7d89a0;
+  --grad-gold:linear-gradient(180deg,#f9e7ab 0%,#ecc46e 38%,#c9942f 62%,#f2d78d 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{background:var(--bg0);color:var(--body);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16.5px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--gold-hi);text-decoration:none}
+::selection{background:rgba(217,171,74,.32);color:#fff}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:4px}
+.wrap{width:min(880px,92vw);margin:0 auto}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease var(--d,0s),transform .8s cubic-bezier(.22,.7,.3,1) var(--d,0s)}
+.reveal.on{opacity:1;transform:none}
+
+/* navigacija */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(6,10,18,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:var(--line-soft)}
+.nav-in{width:min(1240px,94vw);margin:0 auto;display:flex;align-items:center;gap:26px;padding:13px 0}
+.brand{display:flex;align-items:center;gap:11px;margin-right:auto}
+.brand img{width:36px;height:36px;border-radius:9px;border:1px solid var(--line)}
+.brand b{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:19px;letter-spacing:.3em;text-indent:.3em;
+  background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.back{display:inline-flex;align-items:center;gap:8px;color:var(--body);font-size:14.5px;transition:color .25s}
+.back:hover{color:var(--gold-hi)}
+.back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* zaglavlje s pozadinom */
+.phead{position:relative;padding:150px 0 74px;text-align:center;overflow:hidden;background:#04070d}
+.phead-bg{position:absolute;inset:0;pointer-events:none}
+.phead-bg::before{content:"";position:absolute;inset:-4%;
+  background:url("images/hero-bg.jpg") 46% 24%/cover no-repeat}
+.phead-scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, rgba(4,7,13,.90) 0%, rgba(4,7,13,.62) 45%, rgba(5,9,16,.88) 80%, #050910 100%)}
+.phead-in{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:14px;
+  font-size:11.5px;letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
+.eyebrow::before,.eyebrow::after{content:"";height:1px;width:44px;background:linear-gradient(90deg,transparent,var(--line));flex:none}
+.eyebrow::after{background:linear-gradient(90deg,var(--line),transparent)}
+h1{font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:clamp(34px,6vw,58px);line-height:1.12;color:var(--ink);font-weight:600;text-wrap:balance}
+h1 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:600px;margin:18px auto 0;font-size:clamp(15.5px,1.9vw,18px);color:var(--body)}
+
+/* forma */
+.formsec{padding:56px 0 110px}
+.fcard{position:relative;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+  box-shadow:0 40px 90px rgba(0,0,0,.5);padding:clamp(26px,4.5vw,48px)}
+.fcard::before{content:"";position:absolute;inset:5px;border:1px solid rgba(217,171,74,.15);border-radius:17px;pointer-events:none}
+.fcard > *{position:relative;z-index:1}
+
+.flabel{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:26px 0 10px}
+.flabel:first-child{margin-top:0}
+.flabel small{color:var(--mut);letter-spacing:.06em;text-transform:none;font-weight:400}
+
+/* vrsta — kartice */
+.types{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:760px){.types{grid-template-columns:repeat(4,1fr)}}
+.type input{position:absolute;opacity:0;pointer-events:none}
+.type span{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;cursor:pointer;
+  border:1px solid var(--line-soft);border-radius:14px;padding:18px 10px 15px;
+  background:rgba(5,9,16,.5);transition:border-color .25s,background .25s,transform .25s;
+  font-size:13.5px;color:var(--body);letter-spacing:.02em;height:100%}
+.type svg{width:26px;height:26px;stroke:var(--mut);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+.type span:hover{border-color:var(--line);transform:translateY(-2px)}
+.type input:checked + span{border-color:var(--gold-hi);background:rgba(217,171,74,.10);color:var(--ink);
+  box-shadow:0 0 0 1px rgba(246,217,138,.3),0 8px 26px rgba(0,0,0,.35)}
+.type input:checked + span svg{stroke:var(--gold-hi)}
+.type input:focus-visible + span{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+/* polja */
+.grid2{display:grid;gap:14px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+input[type=text],input[type=email],textarea,select{
+  width:100%;border-radius:13px;border:1px solid var(--line-soft);
+  background:rgba(5,9,16,.6);padding:13px 17px;color:var(--ink);font-size:15px;outline:none;
+  transition:border-color .25s,box-shadow .25s;font-family:inherit}
+input::placeholder,textarea::placeholder{color:var(--mut)}
+input:focus,textarea:focus,select:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,171,74,.13)}
+textarea{min-height:110px;resize:vertical;line-height:1.6}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d9ab4a' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 18px center;padding-right:44px}
+select option{background:#0c1526;color:var(--ink)}
+.field{margin-bottom:14px}
+.hint{font-size:12.5px;color:var(--mut);margin-top:6px}
+.hp{position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden}
+
+/* gumb + status */
+.send{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;
+  border-radius:999px;background:linear-gradient(180deg,#f4d98d,#d5a844 55%,#bb8a30);
+  color:#221806;font-weight:700;font-size:16px;padding:15px 44px;letter-spacing:.02em;font-family:inherit;
+  box-shadow:0 8px 26px rgba(213,168,68,.35),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .25s,filter .25s;margin-top:28px}
+.send:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.send:disabled{opacity:.7;cursor:default;transform:none}
+.fstatus{min-height:22px;margin-top:14px;font-size:14.5px;color:var(--mut)}
+.fstatus.err{color:#ee8b98}
+.center{text-align:center}
+
+/* uspjeh */
+.done{display:none;text-align:center;padding:26px 0 8px}
+.done .seal{width:96px;margin:0 auto 22px;position:relative}
+.done .seal img{border-radius:50%;border:1px solid rgba(246,217,138,.55);
+  box-shadow:0 0 0 6px rgba(217,171,74,.10),0 14px 40px rgba(0,0,0,.55)}
+.done h2{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(26px,4vw,34px);color:var(--ink);font-weight:600;margin-bottom:10px}
+.done h2 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.done p{max-width:44ch;margin:0 auto 26px}
+.done .again{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:11px 26px;
+  color:var(--gold-hi);font-size:14.5px;transition:border-color .25s,background .25s;cursor:pointer;background:none;font-family:inherit}
+.done .again:hover{border-color:var(--gold-hi);background:rgba(217,171,74,.08)}
+
+/* podnožje */
+footer{border-top:1px solid var(--line-soft);background:#04070d;padding:30px 0;text-align:center;font-size:13.5px;color:var(--mut)}
+footer a{border-bottom:1px solid rgba(246,217,138,.35)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" id="nav" aria-label="Navigacija">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="Lumen — naslovnica">
+      <img src="images/favicon.png" alt="" width="36" height="36">
+      <b>LUMEN</b>
+    </a>
+    <a class="back" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Natrag na naslovnicu</a>
+  </div>
+</nav>
+
+<header class="phead">
+  <div class="phead-bg" aria-hidden="true"></div>
+  <div class="phead-scrim" aria-hidden="true"></div>
+  <div class="phead-in wrap">
+    <p class="eyebrow reveal">Zajednica</p>
+    <h1 class="reveal" style="--d:.08s">Pomozi <em>graditi</em> Lumen</h1>
+    <p class="lead reveal" style="--d:.16s">Najbolja pitanja ne piše jedan čovjek — piše ih cijelo kraljevstvo.
+      Predloži pitanje za bazu znanja, prijavi grešku ili podijeli ideju.</p>
+  </div>
+</header>
+
+<section class="formsec" aria-label="Obrazac za prijedloge">
+  <div class="wrap">
+    <div class="fcard reveal" style="--d:.1s">
+
+      <form id="fbForm" novalidate>
+        <label class="flabel">Što nam šalješ?</label>
+        <div class="types" role="radiogroup" aria-label="Vrsta prijedloga">
+          <label class="type"><input type="radio" name="vrsta" value="pitanje" checked>
+            <span><svg viewBox="0 0 24 24"><path d="M12 6c-1.8-1.6-4.2-2-8-2v14c3.8 0 6.2.4 8 2 1.8-1.6 4.2-2 8-2V4c-3.8 0-6.2.4-8 2zM12 6v14"/></svg>Prijedlog pitanja</span></label>
+          <label class="type"><input type="radio" name="vrsta" value="greska">
+            <span><svg viewBox="0 0 24 24"><path d="M12 21c-4 0-8-2.5-8-7V7l8-4 8 4v7c0 4.5-4 7-8 7z"/><path d="M12 8v5M12 16v.5"/></svg>Prijava greške</span></label>
+          <label class="type"><input type="radio" name="vrsta" value="ideja">
+            <span><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.6 1 2.5h6c0-.9.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>Ideja za igru</span></label>
+          <label class="type"><input type="radio" name="vrsta" value="ostalo">
+            <span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>Ostalo</span></label>
+        </div>
+
+        <!-- PRIJEDLOG PITANJA -->
+        <div class="fgroup" data-for="pitanje">
+          <label class="flabel">Pitanje za bazu znanja</label>
+          <div class="grid2 field">
+            <div>
+              <select name="kategorija" aria-label="Kategorija">
+                <option value="" selected disabled>Kategorija…</option>
+                <option>Geografija</option><option>Glazba</option><option>Opće znanje</option><option>Povijest</option>
+                <option>Priroda</option><option>Sport</option><option>Umjetnost</option><option>Znanost</option>
+              </select>
+            </div>
+            <div>
+              <select name="razina" aria-label="Razina težine">
+                <option value="" selected disabled>Razina težine…</option>
+                <option>Osnovna škola</option><option>Srednja škola</option><option>Komplicirana</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><textarea name="pitanje" rows="2" placeholder="Tekst pitanja — npr. Koja rijeka protječe kroz Osijek?"></textarea></div>
+          <div class="field"><input type="text" name="tocan" placeholder="✓ Točan odgovor"></div>
+          <div class="grid2 field">
+            <input type="text" name="netocan1" placeholder="✗ Netočan odgovor 1">
+            <input type="text" name="netocan2" placeholder="✗ Netočan odgovor 2 (nije obavezno)">
+          </div>
+          <div class="field"><input type="text" name="netocan3" placeholder="✗ Netočan odgovor 3 (nije obavezno)"></div>
+        </div>
+
+        <!-- PRIJAVA GREŠKE -->
+        <div class="fgroup" data-for="greska" hidden>
+          <label class="flabel">Opiši grešku</label>
+          <div class="field"><textarea name="opisGreske" placeholder="Što se dogodilo, gdje u igri i kako je ponoviti?"></textarea></div>
+          <div class="field"><input type="text" name="uredjaj" placeholder="Uređaj i sustav — npr. iPhone 13, iOS 19 (nije obavezno)"></div>
+        </div>
+
+        <!-- IDEJA -->
+        <div class="fgroup" data-for="ideja" hidden>
+          <label class="flabel">Tvoja ideja</label>
+          <div class="field"><textarea name="opisIdeje" placeholder="Nova mogućnost, novi način igre, poboljšanje — sve nas zanima."></textarea></div>
+        </div>
+
+        <!-- OSTALO -->
+        <div class="fgroup" data-for="ostalo" hidden>
+          <label class="flabel">Tvoja poruka</label>
+          <div class="field"><textarea name="poruka" placeholder="Reci nam što ti je na umu."></textarea></div>
+        </div>
+
+        <label class="flabel">Tvoj e-mail <small>— nije obavezno, samo ako želiš odgovor</small></label>
+        <div class="field"><input type="email" name="email" placeholder="tvoj@email.com"></div>
+
+        <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+
+        <div class="center">
+          <button type="submit" class="send" id="sendBtn">Pošalji prijedlog</button>
+          <p class="fstatus" id="fstatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="done" id="done">
+        <div class="seal"><img src="images/favicon.png" alt="" width="96" height="96"></div>
+        <h2>Hvala, <em>viteže</em>!</h2>
+        <p id="doneText">Tvoj prijedlog je stigao u kraljevsku riznicu. Svaki pročitamo — najbolja pitanja ulaze u igru.</p>
+        <button class="again" id="againBtn">Pošalji još jedan prijedlog</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="yr">2026</span> Lumen · <a href="index.html">Natrag na naslovnicu</a></div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* nav staklo */
+  var nav = document.getElementById("nav");
+  function onNav(){ nav.classList.toggle("scrolled", window.scrollY > 30); }
+  window.addEventListener("scroll", onNav, {passive:true}); onNav();
+
+  /* otkrivanje */
+  var revs = document.querySelectorAll(".reveal");
+  if (rm || !("IntersectionObserver" in window)) revs.forEach(function(el){ el.classList.add("on"); });
+  else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("on"); io.unobserve(e.target);} });
+    }, {threshold:.1});
+    revs.forEach(function(el){ io.observe(el); });
+  }
+
+  /* prebacivanje vrste */
+  var form = document.getElementById("fbForm");
+  var groups = document.querySelectorAll(".fgroup");
+  function currentType(){ return form.querySelector('input[name="vrsta"]:checked').value; }
+  function switchType(){
+    var t = currentType();
+    groups.forEach(function(g){ g.hidden = g.getAttribute("data-for") !== t; });
+  }
+  form.querySelectorAll('input[name="vrsta"]').forEach(function(r){ r.addEventListener("change", switchType); });
+  switchType();
+
+  /* slanje */
+  var SB_URL = "https://thfshicvuibtstydttpu.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZnNoaWN2dWlidHN0eWR0dHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTk3ODEsImV4cCI6MjA5OTA5NTc4MX0.sJ0gP6fHdBs9dABwAtGggNnhKQB9px5dgxC5yek3SD0";
+  var LABELS = { pitanje:"Prijedlog pitanja", greska:"Prijava greške", ideja:"Ideja za igru", ostalo:"Poruka" };
+  var st = document.getElementById("fstatus");
+  var btn = document.getElementById("sendBtn");
+
+  function val(name){ var el = form.elements[name]; return el ? (el.value||"").trim() : ""; }
+  function err(msg){ st.textContent = msg; st.className = "fstatus err"; }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    st.textContent = ""; st.className = "fstatus";
+    var t = currentType();
+    var payload = { "Vrsta": LABELS[t] };
+
+    if (t === "pitanje") {
+      if (!val("kategorija")) return err("Odaberi kategoriju pitanja.");
+      if (!val("razina")) return err("Odaberi razinu težine.");
+      if (val("pitanje").length < 10) return err("Upiši tekst pitanja (bar 10 znakova).");
+      if (!val("tocan")) return err("Upiši točan odgovor.");
+      if (!val("netocan1")) return err("Upiši bar jedan netočan odgovor.");
+      payload["Kategorija"] = val("kategorija");
+      payload["Razina"] = val("razina");
+      payload["Pitanje"] = val("pitanje");
+      payload["Točan odgovor"] = val("tocan");
+      payload["Netočan odgovor 1"] = val("netocan1");
+      if (val("netocan2")) payload["Netočan odgovor 2"] = val("netocan2");
+      if (val("netocan3")) payload["Netočan odgovor 3"] = val("netocan3");
+    } else if (t === "greska") {
+      if (val("opisGreske").length < 10) return err("Opiši grešku (bar 10 znakova).");
+      payload["Opis greške"] = val("opisGreske");
+      if (val("uredjaj")) payload["Uređaj"] = val("uredjaj");
+    } else if (t === "ideja") {
+      if (val("opisIdeje").length < 10) return err("Opiši ideju (bar 10 znakova).");
+      payload["Ideja"] = val("opisIdeje");
+    } else {
+      if (val("poruka").length < 5) return err("Upiši poruku.");
+      payload["Poruka"] = val("poruka");
+    }
+
+    var em = val("email");
+    if (em) {
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return err("E-mail adresa ne izgleda ispravno.");
+      payload["E-mail pošiljatelja"] = em.toLowerCase();
+    }
+
+    /* honeypot — botovi dobiju lažni uspjeh */
+    if (val("website")) { showDone(); return; }
+
+    btn.disabled = true; var old = btn.textContent; btn.textContent = "Šaljem…";
+    fetch(SB_URL + "/rest/v1/feedback", {
+      method: "POST",
+      headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+        "Content-Type": "application/json", "Prefer": "return=minimal" },
+      body: JSON.stringify({ type: t, payload: payload })
+    }).then(function(r){
+      if (r.status === 201) showDone();
+      else throw new Error("HTTP " + r.status);
+    }).catch(function(){
+      err("Nešto je zapelo — provjeri vezu i pokušaj ponovno.");
+      btn.disabled = false; btn.textContent = old;
+    });
+  });
+
+  var doneBox = document.getElementById("done");
+  function showDone(){
+    form.style.display = "none";
+    doneBox.style.display = "block";
+    window.scrollTo({top: doneBox.getBoundingClientRect().top + scrollY - 140, behavior: rm ? "auto" : "smooth"});
+  }
+  document.getElementById("againBtn").addEventListener("click", function(){
+    form.reset(); switchType();
+    btn.disabled = false; btn.textContent = "Pošalji prijedlog";
+    st.textContent = ""; st.className = "fstatus";
+    doneBox.style.display = "none"; form.style.display = "";
+  });
+
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>
