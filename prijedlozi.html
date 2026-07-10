@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Prijedlozi — Lumen: Borba znanjem</title>
-<meta name="description" content="Pomozi graditi Lumen: predloži pitanje za bazu znanja, prijavi grešku ili podijeli ideju za igru.">
+<meta name="description" content="Pomozi graditi Lumen: predloži pitanje za bazu znanja, prijavi grešku sa screenshotom ili podijeli ideju za igru.">
 <meta name="theme-color" content="#060b14">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Pomozi graditi Lumen">
@@ -57,47 +57,80 @@ a{color:var(--gold-hi);text-decoration:none}
 .back:hover{color:var(--gold-hi)}
 .back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* zaglavlje s pozadinom */
-.phead{position:relative;padding:150px 0 74px;text-align:center;overflow:hidden;background:#04070d}
+/* zaglavlje s pozadinom i zrakama */
+.phead{position:relative;padding:158px 0 86px;text-align:center;overflow:hidden;background:#04070d}
 .phead-bg{position:absolute;inset:0;pointer-events:none}
 .phead-bg::before{content:"";position:absolute;inset:-4%;
   background:url("images/hero-bg.jpg") 46% 24%/cover no-repeat}
 .phead-scrim{position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg, rgba(4,7,13,.90) 0%, rgba(4,7,13,.62) 45%, rgba(5,9,16,.88) 80%, #050910 100%)}
+  background:linear-gradient(180deg, rgba(4,7,13,.90) 0%, rgba(4,7,13,.60) 45%, rgba(5,9,16,.88) 80%, #050910 100%)}
+.rays{position:absolute;left:50%;top:-64vw;width:min(1200px,150vw);aspect-ratio:1;
+  transform:translateX(-50%);z-index:1;pointer-events:none;opacity:.4;
+  -webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent 66%);
+  mask-image:radial-gradient(closest-side,#000 20%,transparent 66%)}
+@media(min-width:900px){.rays{top:-560px}}
+.rays i{position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg, rgba(246,217,138,.13) 0deg 5deg, transparent 5deg 24deg);
+  animation:spin 90s linear infinite}
+.rays i:nth-child(2){background:repeating-conic-gradient(from 12deg, rgba(255,170,80,.09) 0deg 3deg, transparent 3deg 29deg);
+  animation:spin 150s linear infinite reverse}
+@keyframes spin{to{rotate:360deg}}
 .phead-in{position:relative;z-index:2}
 .eyebrow{display:flex;align-items:center;justify-content:center;gap:14px;
   font-size:11.5px;letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
 .eyebrow::before,.eyebrow::after{content:"";height:1px;width:44px;background:linear-gradient(90deg,transparent,var(--line));flex:none}
 .eyebrow::after{background:linear-gradient(90deg,var(--line),transparent)}
 h1{font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
-  font-size:clamp(34px,6vw,58px);line-height:1.12;color:var(--ink);font-weight:600;text-wrap:balance}
+  font-size:clamp(36px,6.2vw,60px);line-height:1.12;color:var(--ink);font-weight:600;text-wrap:balance}
 h1 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{max-width:600px;margin:18px auto 0;font-size:clamp(15.5px,1.9vw,18px);color:var(--body)}
+.orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:24px auto 0}
+.orn span{height:1px;width:74px;background:linear-gradient(90deg,transparent,var(--line))}
+.orn span:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.orn b{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 12px rgba(217,171,74,.6)}
 
 /* forma */
-.formsec{padding:56px 0 110px}
+.formsec{padding:54px 0 110px}
 .fcard{position:relative;border:1px solid var(--line);border-radius:22px;
   background:linear-gradient(180deg,var(--panel-hi),var(--panel));
-  box-shadow:0 40px 90px rgba(0,0,0,.5);padding:clamp(26px,4.5vw,48px)}
+  box-shadow:0 40px 90px rgba(0,0,0,.5);padding:clamp(26px,4.5vw,50px)}
 .fcard::before{content:"";position:absolute;inset:5px;border:1px solid rgba(217,171,74,.15);border-radius:17px;pointer-events:none}
 .fcard > *{position:relative;z-index:1}
+.corner{position:absolute;width:16px;height:16px;border-color:var(--gold-hi);border-style:solid;opacity:.8;z-index:2}
+.c1{top:-2px;left:-2px;border-width:2px 0 0 2px;border-radius:7px 0 0 0}
+.c2{top:-2px;right:-2px;border-width:2px 2px 0 0;border-radius:0 7px 0 0}
+.c3{bottom:-2px;left:-2px;border-width:0 0 2px 2px;border-radius:0 0 0 7px}
+.c4{bottom:-2px;right:-2px;border-width:0 2px 2px 0;border-radius:0 0 7px 0}
 
-.flabel{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:26px 0 10px}
-.flabel:first-child{margin-top:0}
-.flabel small{color:var(--mut);letter-spacing:.06em;text-transform:none;font-weight:400}
+/* koraci — rimski brojevi */
+.step-label{display:flex;align-items:center;gap:14px;margin:34px 0 16px}
+.step-label:first-of-type{margin-top:0}
+.step-label i{width:34px;height:34px;flex:none;border:1.5px solid var(--gold);border-radius:50%;
+  display:grid;place-items:center;font-style:normal;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:14px;color:var(--gold-hi);font-weight:700;
+  background:radial-gradient(circle at 50% 30%,rgba(217,171,74,.16),rgba(217,171,74,.02));
+  box-shadow:0 0 16px rgba(217,171,74,.18)}
+.step-label b{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(17px,2.2vw,20px);
+  color:var(--ink);font-weight:600;letter-spacing:.02em}
+.step-label small{color:var(--mut);font-size:13px;font-weight:400;margin-left:2px}
+.step-label span{height:1px;flex:1;background:linear-gradient(90deg,var(--line-soft),transparent)}
 
 /* vrsta — kartice */
 .types{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:760px){.types{grid-template-columns:repeat(4,1fr)}}
 .type input{position:absolute;opacity:0;pointer-events:none}
-.type span{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;cursor:pointer;
-  border:1px solid var(--line-soft);border-radius:14px;padding:18px 10px 15px;
-  background:rgba(5,9,16,.5);transition:border-color .25s,background .25s,transform .25s;
+.type span{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;cursor:pointer;
+  border:1px solid var(--line-soft);border-radius:16px;padding:20px 10px 17px;
+  background:rgba(5,9,16,.5);transition:border-color .25s,background .25s,transform .25s,box-shadow .25s;
   font-size:13.5px;color:var(--body);letter-spacing:.02em;height:100%}
-.type svg{width:26px;height:26px;stroke:var(--mut);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+.type .ico{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-soft);display:grid;place-items:center;
+  background:rgba(217,171,74,.05);transition:border-color .25s,box-shadow .25s,background .25s}
+.type svg{width:22px;height:22px;stroke:var(--mut);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
 .type span:hover{border-color:var(--line);transform:translateY(-2px)}
-.type input:checked + span{border-color:var(--gold-hi);background:rgba(217,171,74,.10);color:var(--ink);
-  box-shadow:0 0 0 1px rgba(246,217,138,.3),0 8px 26px rgba(0,0,0,.35)}
+.type input:checked + span{border-color:rgba(246,217,138,.65);background:rgba(217,171,74,.09);color:var(--ink);
+  box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.type input:checked + span .ico{border-color:var(--gold-hi);background:rgba(217,171,74,.14);
+  box-shadow:0 0 18px rgba(217,171,74,.35)}
 .type input:checked + span svg{stroke:var(--gold-hi)}
 .type input:focus-visible + span{outline:2px solid var(--gold-hi);outline-offset:3px}
 
@@ -105,41 +138,70 @@ h1 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text
 .grid2{display:grid;gap:14px}
 @media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
 input[type=text],input[type=email],textarea,select{
-  width:100%;border-radius:13px;border:1px solid var(--line-soft);
-  background:rgba(5,9,16,.6);padding:13px 17px;color:var(--ink);font-size:15px;outline:none;
-  transition:border-color .25s,box-shadow .25s;font-family:inherit}
+  width:100%;border-radius:14px;border:1px solid var(--line-soft);
+  background:rgba(5,9,16,.6);padding:14px 18px;color:var(--ink);font-size:15px;outline:none;
+  transition:border-color .25s,box-shadow .25s;font-family:inherit;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
 input::placeholder,textarea::placeholder{color:var(--mut)}
-input:focus,textarea:focus,select:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,171,74,.13)}
-textarea{min-height:110px;resize:vertical;line-height:1.6}
+input:focus,textarea:focus,select:focus{border-color:var(--gold-hi);box-shadow:inset 0 2px 6px rgba(0,0,0,.25),0 0 0 3px rgba(217,171,74,.13)}
+textarea{min-height:116px;resize:vertical;line-height:1.6}
 select{appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d9ab4a' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 18px center;padding-right:44px}
 select option{background:#0c1526;color:var(--ink)}
 .field{margin-bottom:14px}
-.hint{font-size:12.5px;color:var(--mut);margin-top:6px}
 .hp{position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden}
+
+/* screenshot upload */
+.drop{position:relative;border:1.5px dashed rgba(217,171,74,.4);border-radius:16px;
+  padding:26px 18px;text-align:center;cursor:pointer;background:rgba(217,171,74,.03);
+  transition:border-color .25s,background .25s}
+.drop:hover,.drop.over{border-color:var(--gold-hi);background:rgba(217,171,74,.08)}
+.drop svg{width:34px;height:34px;margin:0 auto 10px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.drop b{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:3px}
+.drop small{color:var(--mut);font-size:12.5px}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.shot-preview{display:none;align-items:center;gap:14px;border:1px solid var(--line-soft);
+  border-radius:14px;padding:10px 14px;background:rgba(5,9,16,.55)}
+.shot-preview.show{display:flex}
+.shot-preview img{width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--line-soft)}
+.shot-preview .meta{flex:1;min-width:0;text-align:left}
+.shot-preview .meta b{display:block;color:var(--ink);font-size:13.5px;font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shot-preview .meta small{color:var(--mut);font-size:12px}
+.shot-x{width:32px;height:32px;flex:none;border:1px solid var(--line-soft);border-radius:50%;
+  background:none;color:var(--gold-hi);cursor:pointer;display:grid;place-items:center;transition:border-color .25s,background .25s}
+.shot-x:hover{border-color:var(--gold-hi);background:rgba(217,171,74,.1)}
+.shot-x svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 
 /* gumb + status */
 .send{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;
   border-radius:999px;background:linear-gradient(180deg,#f4d98d,#d5a844 55%,#bb8a30);
-  color:#221806;font-weight:700;font-size:16px;padding:15px 44px;letter-spacing:.02em;font-family:inherit;
+  color:#221806;font-weight:700;font-size:16px;padding:16px 48px;letter-spacing:.02em;font-family:inherit;
   box-shadow:0 8px 26px rgba(213,168,68,.35),inset 0 1px 0 rgba(255,255,255,.5);
-  transition:transform .25s,filter .25s;margin-top:28px}
+  transition:transform .25s,filter .25s;margin-top:30px}
 .send:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .send:disabled{opacity:.7;cursor:default;transform:none}
 .fstatus{min-height:22px;margin-top:14px;font-size:14.5px;color:var(--mut)}
 .fstatus.err{color:#ee8b98}
 .center{text-align:center}
+@media(max-width:560px){.send{width:100%}}
 
 /* uspjeh */
-.done{display:none;text-align:center;padding:26px 0 8px}
-.done .seal{width:96px;margin:0 auto 22px;position:relative}
-.done .seal img{border-radius:50%;border:1px solid rgba(246,217,138,.55);
+.done{display:none;text-align:center;padding:30px 0 10px}
+.done .seal{width:100px;margin:0 auto 22px;position:relative}
+.done .seal::before{content:"";position:absolute;inset:-38%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(217,171,74,.28),rgba(217,171,74,.05) 55%,transparent 72%)}
+.done .seal img{position:relative;border-radius:50%;border:1px solid rgba(246,217,138,.55);
   box-shadow:0 0 0 6px rgba(217,171,74,.10),0 14px 40px rgba(0,0,0,.55)}
-.done h2{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(26px,4vw,34px);color:var(--ink);font-weight:600;margin-bottom:10px}
+.done h2{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(27px,4.2vw,36px);color:var(--ink);font-weight:600;margin-bottom:10px}
 .done h2 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
-.done p{max-width:44ch;margin:0 auto 26px}
-.done .again{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:11px 26px;
+.done p{max-width:46ch;margin:0 auto 8px}
+.done .done-orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px auto 24px}
+.done .done-orn span{height:1px;width:56px;background:linear-gradient(90deg,transparent,var(--line))}
+.done .done-orn span:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.done .done-orn b{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.done .again{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:12px 28px;
   color:var(--gold-hi);font-size:14.5px;transition:border-color .25s,background .25s;cursor:pointer;background:none;font-family:inherit}
 .done .again:hover{border-color:var(--gold-hi);background:rgba(217,171,74,.08)}
 
@@ -169,34 +231,37 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
 <header class="phead">
   <div class="phead-bg" aria-hidden="true"></div>
   <div class="phead-scrim" aria-hidden="true"></div>
+  <div class="rays" aria-hidden="true"><i></i><i></i></div>
   <div class="phead-in wrap">
     <p class="eyebrow reveal">Zajednica</p>
     <h1 class="reveal" style="--d:.08s">Pomozi <em>graditi</em> Lumen</h1>
     <p class="lead reveal" style="--d:.16s">Najbolja pitanja ne piše jedan čovjek — piše ih cijelo kraljevstvo.
       Predloži pitanje za bazu znanja, prijavi grešku ili podijeli ideju.</p>
+    <div class="orn reveal" style="--d:.22s" aria-hidden="true"><span></span><b></b><span></span></div>
   </div>
 </header>
 
 <section class="formsec" aria-label="Obrazac za prijedloge">
   <div class="wrap">
     <div class="fcard reveal" style="--d:.1s">
+      <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
 
       <form id="fbForm" novalidate>
-        <label class="flabel">Što nam šalješ?</label>
+        <div class="step-label"><i>I</i><b>Što nam šalješ?</b><span></span></div>
         <div class="types" role="radiogroup" aria-label="Vrsta prijedloga">
           <label class="type"><input type="radio" name="vrsta" value="pitanje" checked>
-            <span><svg viewBox="0 0 24 24"><path d="M12 6c-1.8-1.6-4.2-2-8-2v14c3.8 0 6.2.4 8 2 1.8-1.6 4.2-2 8-2V4c-3.8 0-6.2.4-8 2zM12 6v14"/></svg>Prijedlog pitanja</span></label>
+            <span><i class="ico"><svg viewBox="0 0 24 24"><path d="M12 6c-1.8-1.6-4.2-2-8-2v14c3.8 0 6.2.4 8 2 1.8-1.6 4.2-2 8-2V4c-3.8 0-6.2.4-8 2zM12 6v14"/></svg></i>Prijedlog pitanja</span></label>
           <label class="type"><input type="radio" name="vrsta" value="greska">
-            <span><svg viewBox="0 0 24 24"><path d="M12 21c-4 0-8-2.5-8-7V7l8-4 8 4v7c0 4.5-4 7-8 7z"/><path d="M12 8v5M12 16v.5"/></svg>Prijava greške</span></label>
+            <span><i class="ico"><svg viewBox="0 0 24 24"><path d="M12 21c-4 0-8-2.5-8-7V7l8-4 8 4v7c0 4.5-4 7-8 7z"/><path d="M12 8v5M12 16v.5"/></svg></i>Prijava greške</span></label>
           <label class="type"><input type="radio" name="vrsta" value="ideja">
-            <span><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.6 1 2.5h6c0-.9.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>Ideja za igru</span></label>
+            <span><i class="ico"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.6 1 2.5h6c0-.9.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></i>Ideja za igru</span></label>
           <label class="type"><input type="radio" name="vrsta" value="ostalo">
-            <span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>Ostalo</span></label>
+            <span><i class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></i>Ostalo</span></label>
         </div>
 
         <!-- PRIJEDLOG PITANJA -->
         <div class="fgroup" data-for="pitanje">
-          <label class="flabel">Pitanje za bazu znanja</label>
+          <div class="step-label"><i>II</i><b>Tvoje pitanje</b><span></span></div>
           <div class="grid2 field">
             <div>
               <select name="kategorija" aria-label="Kategorija">
@@ -223,24 +288,40 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
 
         <!-- PRIJAVA GREŠKE -->
         <div class="fgroup" data-for="greska" hidden>
-          <label class="flabel">Opiši grešku</label>
+          <div class="step-label"><i>II</i><b>Opiši grešku</b><span></span></div>
           <div class="field"><textarea name="opisGreske" placeholder="Što se dogodilo, gdje u igri i kako je ponoviti?"></textarea></div>
           <div class="field"><input type="text" name="uredjaj" placeholder="Uređaj i sustav — npr. iPhone 13, iOS 19 (nije obavezno)"></div>
         </div>
 
         <!-- IDEJA -->
         <div class="fgroup" data-for="ideja" hidden>
-          <label class="flabel">Tvoja ideja</label>
+          <div class="step-label"><i>II</i><b>Tvoja ideja</b><span></span></div>
           <div class="field"><textarea name="opisIdeje" placeholder="Nova mogućnost, novi način igre, poboljšanje — sve nas zanima."></textarea></div>
         </div>
 
         <!-- OSTALO -->
         <div class="fgroup" data-for="ostalo" hidden>
-          <label class="flabel">Tvoja poruka</label>
+          <div class="step-label"><i>II</i><b>Tvoja poruka</b><span></span></div>
           <div class="field"><textarea name="poruka" placeholder="Reci nam što ti je na umu."></textarea></div>
         </div>
 
-        <label class="flabel">Tvoj e-mail <small>— nije obavezno, samo ako želiš odgovor</small></label>
+        <!-- SCREENSHOT (za grešku/ideju/ostalo) -->
+        <div id="shotBlock">
+          <div class="step-label"><i>III</i><b>Screenshot</b><small>— nije obavezno, ali jako pomaže</small><span></span></div>
+          <div class="drop field" id="drop">
+            <svg viewBox="0 0 24 24"><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2M12 4v11M7.5 8.5 12 4l4.5 4.5"/></svg>
+            <b>Dovuci sliku ovamo ili klikni</b>
+            <small>PNG, JPG ili WEBP · do 5 MB</small>
+            <input type="file" id="shotInput" accept="image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif" aria-label="Priloži screenshot">
+          </div>
+          <div class="shot-preview field" id="shotPreview">
+            <img id="shotThumb" alt="Pregled priložene slike">
+            <div class="meta"><b id="shotName"></b><small id="shotSize"></small></div>
+            <button type="button" class="shot-x" id="shotRemove" aria-label="Ukloni sliku"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </div>
+
+        <div class="step-label"><i id="mailNum">IV</i><b>Tvoj e-mail</b><small>— nije obavezno, samo ako želiš odgovor</small><span></span></div>
         <div class="field"><input type="email" name="email" placeholder="tvoj@email.com"></div>
 
         <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
@@ -252,9 +333,10 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
       </form>
 
       <div class="done" id="done">
-        <div class="seal"><img src="images/favicon.png" alt="" width="96" height="96"></div>
+        <div class="seal"><img src="images/favicon.png" alt="" width="100" height="100"></div>
         <h2>Hvala, <em>viteže</em>!</h2>
-        <p id="doneText">Tvoj prijedlog je stigao u kraljevsku riznicu. Svaki pročitamo — najbolja pitanja ulaze u igru.</p>
+        <p>Tvoj prijedlog je stigao u kraljevsku riznicu. Svaki pročitamo — najbolja pitanja ulaze u igru.</p>
+        <div class="done-orn" aria-hidden="true"><span></span><b></b><span></span></div>
         <button class="again" id="againBtn">Pošalji još jedan prijedlog</button>
       </div>
 
@@ -289,23 +371,77 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
   /* prebacivanje vrste */
   var form = document.getElementById("fbForm");
   var groups = document.querySelectorAll(".fgroup");
+  var shotBlock = document.getElementById("shotBlock");
+  var mailNum = document.getElementById("mailNum");
   function currentType(){ return form.querySelector('input[name="vrsta"]:checked').value; }
   function switchType(){
     var t = currentType();
     groups.forEach(function(g){ g.hidden = g.getAttribute("data-for") !== t; });
+    var showShot = t !== "pitanje";
+    shotBlock.hidden = !showShot;
+    mailNum.textContent = showShot ? "IV" : "III";
   }
   form.querySelectorAll('input[name="vrsta"]').forEach(function(r){ r.addEventListener("change", switchType); });
   switchType();
+
+  /* screenshot — odabir, drag&drop, pregled */
+  var drop = document.getElementById("drop");
+  var shotInput = document.getElementById("shotInput");
+  var preview = document.getElementById("shotPreview");
+  var shotFile = null;
+  var MAXB = 5 * 1024 * 1024;
+  var st = document.getElementById("fstatus");
+  function err(msg){ st.textContent = msg; st.className = "fstatus err"; }
+  function fmtSize(b){ return b > 999999 ? (b/1048576).toFixed(1) + " MB" : Math.round(b/1024) + " KB"; }
+  function setFile(f){
+    st.textContent = ""; st.className = "fstatus";
+    if (!f) return;
+    if (!/^image\//.test(f.type)) { err("Priložiti se može samo slika (PNG, JPG, WEBP…)."); return; }
+    if (f.size > MAXB) { err("Slika je prevelika — najviše 5 MB."); return; }
+    shotFile = f;
+    document.getElementById("shotThumb").src = URL.createObjectURL(f);
+    document.getElementById("shotName").textContent = f.name;
+    document.getElementById("shotSize").textContent = fmtSize(f.size);
+    preview.classList.add("show");
+    drop.style.display = "none";
+  }
+  shotInput.addEventListener("change", function(){ setFile(shotInput.files[0]); });
+  ["dragover","dragenter"].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave","drop"].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function(e){
+    if (e.dataTransfer && e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+  });
+  document.getElementById("shotRemove").addEventListener("click", function(){
+    shotFile = null; shotInput.value = "";
+    preview.classList.remove("show");
+    drop.style.display = "";
+  });
 
   /* slanje */
   var SB_URL = "https://thfshicvuibtstydttpu.supabase.co";
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZnNoaWN2dWlidHN0eWR0dHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTk3ODEsImV4cCI6MjA5OTA5NTc4MX0.sJ0gP6fHdBs9dABwAtGggNnhKQB9px5dgxC5yek3SD0";
   var LABELS = { pitanje:"Prijedlog pitanja", greska:"Prijava greške", ideja:"Ideja za igru", ostalo:"Poruka" };
-  var st = document.getElementById("fstatus");
   var btn = document.getElementById("sendBtn");
 
   function val(name){ var el = form.elements[name]; return el ? (el.value||"").trim() : ""; }
-  function err(msg){ st.textContent = msg; st.className = "fstatus err"; }
+
+  function uploadShot(){
+    if (!shotFile || currentType() === "pitanje") return Promise.resolve(null);
+    var ext = (shotFile.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g,"") || "png";
+    var path = currentType() + "/" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8) + "." + ext;
+    return fetch(SB_URL + "/storage/v1/object/screenshots/" + path, {
+      method: "POST",
+      headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": shotFile.type },
+      body: shotFile
+    }).then(function(r){
+      if (!r.ok) throw new Error("upload " + r.status);
+      return SB_URL + "/storage/v1/object/public/screenshots/" + path;
+    });
+  }
 
   form.addEventListener("submit", function(e){
     e.preventDefault();
@@ -347,12 +483,18 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
     /* honeypot — botovi dobiju lažni uspjeh */
     if (val("website")) { showDone(); return; }
 
-    btn.disabled = true; var old = btn.textContent; btn.textContent = "Šaljem…";
-    fetch(SB_URL + "/rest/v1/feedback", {
-      method: "POST",
-      headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
-        "Content-Type": "application/json", "Prefer": "return=minimal" },
-      body: JSON.stringify({ type: t, payload: payload })
+    btn.disabled = true; var old = btn.textContent;
+    btn.textContent = shotFile ? "Šaljem sliku…" : "Šaljem…";
+
+    uploadShot().then(function(url){
+      if (url) payload["Screenshot"] = url;
+      btn.textContent = "Šaljem…";
+      return fetch(SB_URL + "/rest/v1/feedback", {
+        method: "POST",
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json", "Prefer": "return=minimal" },
+        body: JSON.stringify({ type: t, payload: payload })
+      });
     }).then(function(r){
       if (r.status === 201) showDone();
       else throw new Error("HTTP " + r.status);
@@ -366,10 +508,12 @@ footer a{border-bottom:1px solid rgba(246,217,138,.35)}
   function showDone(){
     form.style.display = "none";
     doneBox.style.display = "block";
-    window.scrollTo({top: doneBox.getBoundingClientRect().top + scrollY - 140, behavior: rm ? "auto" : "smooth"});
+    window.scrollTo({top: doneBox.getBoundingClientRect().top + scrollY - 150, behavior: rm ? "auto" : "smooth"});
   }
   document.getElementById("againBtn").addEventListener("click", function(){
     form.reset(); switchType();
+    shotFile = null; shotInput.value = "";
+    preview.classList.remove("show"); drop.style.display = "";
     btn.disabled = false; btn.textContent = "Pošalji prijedlog";
     st.textContent = ""; st.className = "fstatus";
     doneBox.style.display = "none"; form.style.display = "";
