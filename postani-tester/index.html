@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Postani tester — Lumen: Borba znanjem</title>
+<meta name="description" content="Tražimo 50 prvih vitezova za zatvoreno testiranje Lumena na Androidu. Igraj prije svih, osvoji trajnu titulu Prvi vitez i upiši ime u Dvoranu prvih.">
+<meta name="theme-color" content="#060b14">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tražimo 50 prvih vitezova — Lumen">
+<meta property="og:description" content="Zatvoreno testiranje na Androidu: igraj prije svih, osvoji trajnu titulu Prvi vitez i upiši ime u Dvoranu prvih.">
+<meta property="og:image" content="../images/grb.png">
+<meta property="og:locale" content="hr_HR">
+<link rel="icon" type="image/png" href="../images/favicon.png">
+<link rel="apple-touch-icon" href="../images/favicon.png">
+<style>
+:root{
+  --bg0:#050910;
+  --panel:#0b1424;
+  --panel-hi:#101c33;
+  --gold:#d9ab4a;
+  --gold-hi:#f6d98a;
+  --line:rgba(217,171,74,.26);
+  --line-soft:rgba(217,171,74,.14);
+  --ink:#f2e9d3;
+  --body:#aeb9ce;
+  --mut:#7d89a0;
+  --red:#c22030;
+  --red-hi:#ea4458;
+  --grad-gold:linear-gradient(180deg,#f9e7ab 0%,#ecc46e 38%,#c9942f 62%,#f2d78d 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{background:var(--bg0);color:var(--body);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16.5px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--gold-hi);text-decoration:none}
+::selection{background:rgba(217,171,74,.32);color:#fff}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:4px}
+.wrap{width:min(960px,92vw);margin:0 auto}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.progress{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:120;pointer-events:none;
+  background:linear-gradient(90deg,#c9942f,#f6d98a 50%,#c9942f);transform-origin:0 50%;transform:scaleX(0)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease var(--d,0s),transform .8s cubic-bezier(.22,.7,.3,1) var(--d,0s)}
+.reveal.on{opacity:1;transform:none}
+
+/* navigacija */
+.nav{position:fixed;top:0;left:0;right:0;z-index:106;transition:background .35s,border-color .35s;
+  border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top)}
+.nav.scrolled{background:rgba(6,10,18,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:var(--line-soft)}
+.nav-in{width:min(1240px,94vw);margin:0 auto;display:flex;align-items:center;gap:26px;padding:13px 0}
+.brand{display:flex;align-items:center;gap:11px;margin-right:auto}
+.brand img{width:36px;height:36px;border-radius:9px;border:1px solid var(--line)}
+.brand b{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:19px;letter-spacing:.3em;text-indent:.3em;
+  background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.back{display:inline-flex;align-items:center;gap:8px;color:var(--body);font-size:14.5px;transition:color .25s}
+.back:hover{color:var(--gold-hi)}
+.back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* zaglavlje */
+.phead{position:relative;padding:160px 0 78px;text-align:center;overflow:hidden;background:#04070d}
+.phead-bg{position:absolute;inset:0;pointer-events:none}
+.phead-bg::before{content:"";position:absolute;inset:-4%;
+  background:url("../images/hero-bg.jpg") 46% 24%/cover no-repeat}
+.phead-scrim{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 46% at 12% 88%, rgba(194,32,48,.20), transparent 70%),
+    linear-gradient(180deg, rgba(4,7,13,.90) 0%, rgba(4,7,13,.60) 45%, rgba(5,9,16,.88) 80%, #050910 100%)}
+.rays{position:absolute;left:50%;top:-64vw;width:min(1200px,150vw);aspect-ratio:1;
+  transform:translateX(-50%);z-index:1;pointer-events:none;opacity:.4;
+  -webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent 66%);
+  mask-image:radial-gradient(closest-side,#000 20%,transparent 66%)}
+@media(min-width:900px){.rays{top:-560px}}
+.rays i{position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg, rgba(246,217,138,.13) 0deg 5deg, transparent 5deg 24deg);
+  animation:spin 90s linear infinite}
+.rays i:nth-child(2){background:repeating-conic-gradient(from 12deg, rgba(255,170,80,.09) 0deg 3deg, transparent 3deg 29deg);
+  animation:spin 150s linear infinite reverse}
+@keyframes spin{to{rotate:360deg}}
+.phead-in{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:14px;
+  font-size:11.5px;letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--red-hi);font-weight:700;margin-bottom:16px}
+.eyebrow::before,.eyebrow::after{content:"";height:1px;width:44px;background:linear-gradient(90deg,transparent,rgba(234,68,88,.5));flex:none}
+.eyebrow::after{background:linear-gradient(90deg,rgba(234,68,88,.5),transparent)}
+h1{font-family:"Hoefler Text","Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:clamp(36px,6.6vw,62px);line-height:1.1;color:var(--ink);font-weight:600;text-wrap:balance}
+h1 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:640px;margin:18px auto 0;font-size:clamp(15.5px,1.9vw,18px);color:var(--body)}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;
+  padding:8px 18px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);
+  background:rgba(217,171,74,.06)}
+.chip.red{border-color:rgba(234,68,88,.45);color:#ffc9d0;background:rgba(194,32,48,.10)}
+
+/* naslovi sekcija */
+.sec{padding:clamp(60px,8vw,96px) 0}
+.h2{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(27px,4.2vw,40px);line-height:1.16;
+  color:var(--ink);font-weight:600;text-align:center;text-wrap:balance}
+.h2 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;max-width:620px;margin:14px auto 0;color:var(--body);font-size:15.5px}
+.orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px auto 0}
+.orn span{height:1px;width:74px;background:linear-gradient(90deg,transparent,var(--line))}
+.orn span:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.orn b{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 12px rgba(217,171,74,.6)}
+
+/* povlastice */
+.bens{display:grid;gap:16px;margin-top:48px}
+@media(min-width:820px){.bens{grid-template-columns:repeat(2,1fr);gap:20px}}
+.ben{position:relative;display:flex;gap:18px;border:1px solid var(--line-soft);border-radius:18px;
+  padding:26px 26px 28px;background:linear-gradient(180deg,var(--panel-hi),var(--panel));overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s}
+.ben::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(246,217,138,.5),transparent);opacity:.5}
+.ben:hover{transform:translateY(-4px);border-color:var(--line);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.ben .bico{width:52px;height:52px;flex:none;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;background:rgba(217,171,74,.07)}
+.ben .bico svg{width:25px;height:25px;stroke:var(--gold-hi);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ben h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:19px;color:var(--ink);font-weight:600;margin-bottom:6px}
+.ben h3 small{display:inline-block;margin-left:8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:#ffc9d0;border:1px solid rgba(234,68,88,.45);border-radius:999px;padding:2px 10px;vertical-align:2px;font-weight:600}
+.ben p{font-size:14.5px;color:var(--body)}
+
+/* put do viteštva */
+.path{max-width:640px;margin:48px auto 0;position:relative;padding-left:26px}
+.path::before{content:"";position:absolute;left:25px;top:26px;bottom:26px;width:2px;
+  background:linear-gradient(180deg,rgba(217,171,74,.5),rgba(217,171,74,.12))}
+.pstep{position:relative;display:flex;gap:22px;padding:16px 0}
+.pstep i{width:52px;height:52px;flex:none;border:1.5px solid var(--gold);border-radius:50%;z-index:1;
+  display:grid;place-items:center;font-style:normal;
+  font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:19px;color:var(--gold-hi);font-weight:700;
+  background:#0a1322;box-shadow:0 0 20px rgba(217,171,74,.2);margin-left:-26px}
+.pstep b{display:block;font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:18.5px;color:var(--ink);
+  font-weight:600;margin:4px 0 4px}
+.pstep b small{display:inline-block;margin-left:8px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:2px 10px;vertical-align:2px;font-weight:600}
+.pstep p{font-size:14.5px}
+
+/* proglas — forma s pečatom */
+.decree{position:relative;border:1px solid var(--line);border-radius:24px;margin-top:54px;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+  box-shadow:0 40px 90px rgba(0,0,0,.55);padding:clamp(30px,5vw,54px);text-align:center;overflow:visible}
+.decree::before{content:"";position:absolute;inset:6px;border:1px solid rgba(217,171,74,.16);border-radius:18px;pointer-events:none}
+.corner{position:absolute;width:16px;height:16px;border-color:var(--gold-hi);border-style:solid;opacity:.8;z-index:2}
+.c1{top:-2px;left:-2px;border-width:2px 0 0 2px;border-radius:7px 0 0 0}
+.c2{top:-2px;right:-2px;border-width:2px 2px 0 0;border-radius:0 7px 0 0}
+.c3{bottom:-2px;left:-2px;border-width:0 0 2px 2px;border-radius:0 0 0 7px}
+.c4{bottom:-2px;right:-2px;border-width:0 2px 2px 0;border-radius:0 0 7px 0}
+/* voštani pečat */
+.wax{position:absolute;top:-34px;right:clamp(14px,4vw,44px);width:92px;height:92px;z-index:3;
+  transform:rotate(-9deg);filter:drop-shadow(0 10px 24px rgba(0,0,0,.55))}
+.wax .w1{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #d9384a, #a31a2c 55%, #6e0e1c 100%)}
+.wax .w2{position:absolute;inset:7px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.28)}
+.wax svg{position:absolute;inset:0;margin:auto;width:40px;height:40px;fill:rgba(255,236,210,.92)}
+.wax small{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+  font-size:7.5px;letter-spacing:.22em;color:rgba(255,236,210,.75);text-transform:uppercase;white-space:nowrap}
+.decree h2{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(26px,4vw,36px);color:var(--ink);font-weight:600;margin-bottom:8px;text-wrap:balance}
+.decree h2 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.decree .dsub{max-width:52ch;margin:0 auto;font-size:15px}
+.tform{max-width:520px;margin:30px auto 0;text-align:left}
+.tlabel{display:block;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 8px 4px}
+.tlabel small{color:var(--mut);letter-spacing:.04em;text-transform:none;font-weight:400}
+.tform input{width:100%;border-radius:14px;border:1px solid var(--line-soft);
+  background:rgba(5,9,16,.6);padding:15px 19px;color:var(--ink);font-size:16px;outline:none;
+  transition:border-color .25s,box-shadow .25s;font-family:inherit;box-shadow:inset 0 2px 6px rgba(0,0,0,.25);margin-bottom:16px}
+.tform input::placeholder{color:var(--mut)}
+.tform input:focus{border-color:var(--gold-hi);box-shadow:inset 0 2px 6px rgba(0,0,0,.25),0 0 0 3px rgba(217,171,74,.13)}
+.hp{position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden}
+.send{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;width:100%;
+  border-radius:999px;background:linear-gradient(180deg,#f4d98d,#d5a844 55%,#bb8a30);
+  color:#221806;font-weight:700;font-size:16.5px;padding:17px 40px;letter-spacing:.02em;font-family:inherit;
+  box-shadow:0 8px 26px rgba(213,168,68,.35),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .25s,filter .25s;margin-top:6px}
+.send:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.send:active{transform:translateY(0) scale(.98)}
+.send:disabled{opacity:.7;cursor:default;transform:none}
+.fstatus{min-height:22px;margin-top:12px;font-size:14.5px;color:var(--mut);text-align:center}
+.fstatus.err{color:#ee8b98}
+.dnote{margin-top:14px;font-size:12.5px;color:var(--mut);text-align:center}
+
+/* uspjeh — udarac pečata */
+.done{display:none;text-align:center;padding:14px 0 6px}
+.stamp{width:150px;height:150px;margin:8px auto 24px;position:relative;transform:rotate(-8deg)}
+.stamp.play{animation:stampin .55s cubic-bezier(.2,1.6,.35,1) both}
+@keyframes stampin{
+  0%{transform:rotate(-20deg) scale(2.4);opacity:0}
+  60%{transform:rotate(-6deg) scale(.94);opacity:1}
+  100%{transform:rotate(-8deg) scale(1)}}
+.stamp .w1{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #d9384a, #a31a2c 55%, #6e0e1c 100%);
+  box-shadow:0 16px 44px rgba(163,26,44,.45)}
+.stamp .w2{position:absolute;inset:11px;border-radius:50%;border:2px dashed rgba(255,236,210,.3)}
+.stamp svg{position:absolute;inset:0;margin:auto;width:56px;height:56px;fill:rgba(255,236,210,.95)}
+.stamp small{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+  font-size:10px;letter-spacing:.26em;color:rgba(255,236,210,.85);text-transform:uppercase;white-space:nowrap;font-weight:700}
+.done h3{font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:clamp(26px,4vw,34px);color:var(--ink);font-weight:600;margin-bottom:10px}
+.done h3 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.done p{max-width:48ch;margin:0 auto 6px;font-size:15px}
+.done .mailhint{margin-top:14px;font-size:13px;color:var(--mut)}
+
+/* mini pitanja */
+.mini{max-width:680px;margin:44px auto 0}
+.mini details{border-bottom:1px solid var(--line-soft)}
+.mini details:first-child{border-top:1px solid var(--line-soft)}
+.mini summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:18px 4px;color:var(--ink);font-family:"Hoefler Text",Palatino,Georgia,serif;font-size:17.5px;font-weight:600}
+.mini summary::-webkit-details-marker{display:none}
+.mini summary::after{content:"+";color:var(--gold-hi);font-size:22px;line-height:1;transition:transform .3s}
+.mini details[open] summary::after{transform:rotate(45deg)}
+.mini .a{padding:0 4px 18px;font-size:14.5px;color:var(--body)}
+.mini .a a{border-bottom:1px solid rgba(246,217,138,.4)}
+
+footer{border-top:1px solid var(--line-soft);background:#04070d;padding:30px 0;text-align:center;font-size:13.5px;color:var(--mut)}
+footer a{border-bottom:1px solid rgba(246,217,138,.35)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<nav class="nav" id="nav" aria-label="Navigacija">
+  <div class="nav-in">
+    <a class="brand" href="../index.html" aria-label="Lumen — naslovnica">
+      <img src="../images/favicon.png" alt="" width="36" height="36">
+      <b>LUMEN</b>
+    </a>
+    <a class="back" href="../index.html"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Natrag na naslovnicu</a>
+  </div>
+</nav>
+
+<header class="phead">
+  <div class="phead-bg" aria-hidden="true"></div>
+  <div class="phead-scrim" aria-hidden="true"></div>
+  <div class="rays" aria-hidden="true"><i></i><i></i></div>
+  <div class="phead-in wrap">
+    <p class="eyebrow reveal">Kraljevski proglas</p>
+    <h1 class="reveal" style="--d:.08s">Tražimo <em>50 prvih vitezova</em></h1>
+    <p class="lead reveal" style="--d:.16s">Lumen kreće u zatvoreno testiranje na Androidu.
+      Prije nego što se vrata kraljevstva otvore svima, trebamo šačicu odabranih
+      da igru prokušaju u pravom boju — i za to ih bogato nagrađujemo.</p>
+    <div class="chips reveal" style="--d:.24s">
+      <span class="chip">🤖 Android telefon</span>
+      <span class="chip">⏳ 15 min tjedno</span>
+      <span class="chip">🆓 Potpuno besplatno</span>
+      <span class="chip red">⚔️ Samo 50 mjesta</span>
+    </div>
+  </div>
+</header>
+
+<!-- POVLASTICE -->
+<section class="sec" aria-label="Povlastice">
+  <div class="wrap">
+    <h2 class="h2 reveal">Povlastice <em>Prvog viteza</em></h2>
+    <p class="sub reveal" style="--d:.08s">Prvih 50 nisu obični igrači — oni su osnivači kraljevstva. Zato dobivaju ono što kasnije nitko više neće moći dobiti.</p>
+    <div class="orn reveal" style="--d:.14s" aria-hidden="true"><span></span><b></b><span></span></div>
+    <div class="bens">
+      <div class="ben reveal" style="--d:.05s">
+        <div class="bico"><svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-6 5 6 4-4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z"/></svg></div>
+        <div><h3>Trajna titula „Prvi vitez”<small>zauvijek</small></h3>
+        <p>Kad igra izađe, uz tvoje ime stoji ekskluzivna oznaka Prvog viteza — dobiva je samo prvih 50 testera i nikad se više neće dijeliti.</p></div>
+      </div>
+      <div class="ben reveal" style="--d:.12s">
+        <div class="bico"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+        <div><h3>Igraj prije svih</h3>
+        <p>Pristup zatvorenoj beti odmah — mjesecima prije javnog izlaska. Svaka nova mogućnost prvo stiže u tvoje ruke.</p></div>
+      </div>
+      <div class="ben reveal" style="--d:.19s">
+        <div class="bico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg></div>
+        <div><h3>Ime u Dvorani prvih</h3>
+        <p>Tvoje ime trajno upisano u zahvalama unutar igre — svaki igrač koji ikad otvori Lumen vidjet će tko ga je gradio.</p></div>
+      </div>
+      <div class="ben reveal" style="--d:.26s">
+        <div class="bico"><svg viewBox="0 0 24 24"><path d="m4 4 13 13M4 4v4M4 4h4M20 4 7 17M20 4v4M20 4h-4M3 16l5 5M21 16l-5 5"/></svg></div>
+        <div><h3>Kroj igru s nama</h3>
+        <p>Izravna linija do razvoja: prijedlozi Prvih vitezova imaju prednost, a o velikim odlukama pitamo prvo vas.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUT -->
+<section class="sec" aria-label="Kako postati tester" style="padding-top:8px">
+  <div class="wrap">
+    <h2 class="h2 reveal">Put do <em>viteštva</em></h2>
+    <div class="path">
+      <div class="pstep reveal" style="--d:.05s"><i>I</i>
+        <div><b>Ostavi e-mail <small>odmah</small></b>
+        <p>Upiši se dolje — upute ti stižu na mail iste sekunde, a mi te dodajemo na Google Play popis testera.</p></div>
+      </div>
+      <div class="pstep reveal" style="--d:.12s"><i>II</i>
+        <div><b>Zaprimi poveznicu <small>unutar sat vremena</small></b>
+        <p>Na mail ti stiže Google Play poveznica za instalaciju zatvorene bete. Klik — i igra je na tvom telefonu.</p></div>
+      </div>
+      <div class="pstep reveal" style="--d:.19s"><i>III</i>
+        <div><b>Igraj i sudi</b>
+        <p>Igraj kako inače igraš. Nađeš li grešku ili ti nešto zasmeta — javiš u dva klika. To je cijela služba.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGLAS / FORMA -->
+<section class="sec" aria-label="Prijava" style="padding-top:8px">
+  <div class="wrap">
+    <div class="decree reveal" style="--d:.08s">
+      <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+      <div class="wax" aria-hidden="true"><span class="w1"></span><span class="w2"></span>
+        <svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-6 5 6 4-4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z"/></svg>
+        <small>Lumen</small>
+      </div>
+
+      <form id="tForm" novalidate>
+        <h2>Upiši se u <em>Red prvih</em></h2>
+        <p class="dsub">Jedno polje. Bez registracije, bez obveza — samo tvoj e-mail
+          na koji ti šaljemo upute i poveznicu za igru.</p>
+        <div class="tform">
+          <label class="tlabel" for="tEmail">Tvoj e-mail <small>— Google račun s Android telefona</small></label>
+          <input type="email" id="tEmail" name="email" required placeholder="tvoj@gmail.com" autocomplete="email">
+          <label class="tlabel" for="tDevice">Koji telefon imaš? <small>— nije obavezno, pomaže nam</small></label>
+          <input type="text" id="tDevice" name="device" placeholder="npr. Samsung Galaxy A54">
+          <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+          <button type="submit" class="send" id="tBtn">⚔️&ensp;Postani Prvi vitez</button>
+          <p class="fstatus" id="tStatus" role="status" aria-live="polite"></p>
+          <p class="dnote">E-mail koristimo isključivo za upute i poveznicu za testiranje. Bez spama, brišemo ga na zahtjev.</p>
+        </div>
+      </form>
+
+      <div class="done" id="tDone">
+        <div class="stamp" id="stamp" aria-hidden="true"><span class="w1"></span><span class="w2"></span>
+          <svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-6 5 6 4-4v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8z"/></svg>
+          <small>Primljeno</small>
+        </div>
+        <h3>Dobrodošao u <em>Red prvih</em>!</h3>
+        <p>Tvoja prijava nosi kraljevski pečat. <b style="color:var(--ink)">Provjeri e-mail</b> — upute su već krenule,
+          a poveznica za igru stiže unutar sat vremena.</p>
+        <p class="mailhint">Ne vidiš mail? Zaviri u Promocije ili Spam — i dodaj nas u kontakte.</p>
+      </div>
+    </div>
+
+    <!-- mini pitanja -->
+    <div class="mini reveal" style="--d:.1s">
+      <details>
+        <summary>Trebam li išta platiti?</summary>
+        <div class="a">Ne. Lumen je besplatan zauvijek — bez reklama i bez kupnji. Testeri ga samo dobivaju prije svih.</div>
+      </details>
+      <details>
+        <summary>Imam iPhone — mogu li se prijaviti?</summary>
+        <div class="a">Zatvorena beta trenutno ide samo na Androidu. Za iPhone se <a href="../index.html#preuzmi">upiši na listu čekanja</a> — iOS verzija stiže s izlaskom igre.</div>
+      </details>
+      <details>
+        <summary>Što se točno očekuje od mene?</summary>
+        <div class="a">Da igraš — ozbiljno, to je sve. Ako primijetiš grešku ili ti nešto zasmeta, javiš to <a href="../prijedlozi.html">u dva klika ovdje</a>. Petnaestak minuta tjedno je sasvim dovoljno.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="yr">2026</span> Lumen · <a href="../index.html">Naslovnica</a> · <a href="../prijedlozi.html">Prijedlozi</a></div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var nav = document.getElementById("nav");
+  var prog = document.getElementById("progress");
+  function onNav(){
+    nav.classList.toggle("scrolled", window.scrollY > 30);
+    if (prog) {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = "scaleX(" + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ")";
+    }
+  }
+  window.addEventListener("scroll", onNav, {passive:true}); onNav();
+
+  var revs = document.querySelectorAll(".reveal");
+  if (rm || !("IntersectionObserver" in window)) revs.forEach(function(el){ el.classList.add("on"); });
+  else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("on"); io.unobserve(e.target);} });
+    }, {threshold:.1});
+    revs.forEach(function(el){ io.observe(el); });
+  }
+
+  /* prijava testera */
+  var SB_URL = "https://thfshicvuibtstydttpu.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZnNoaWN2dWlidHN0eWR0dHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTk3ODEsImV4cCI6MjA5OTA5NTc4MX0.sJ0gP6fHdBs9dABwAtGggNnhKQB9px5dgxC5yek3SD0";
+  var form = document.getElementById("tForm");
+  var btn = document.getElementById("tBtn");
+  var st = document.getElementById("tStatus");
+  function err(msg){ st.textContent = msg; st.className = "fstatus err"; }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    st.textContent = ""; st.className = "fstatus";
+    var em = (form.elements["email"].value || "").trim().toLowerCase();
+    var dev = (form.elements["device"].value || "").trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { err("Upiši ispravnu e-mail adresu."); return; }
+    if ((form.elements["website"].value || "").trim()) { showDone(); return; }
+
+    btn.disabled = true; var old = btn.textContent; btn.textContent = "Šaljem prijavu…";
+    fetch(SB_URL + "/rest/v1/testers", {
+      method: "POST",
+      headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+        "Content-Type": "application/json", "Prefer": "return=minimal" },
+      body: JSON.stringify({ email: em, device: dev || null })
+    }).then(function(r){
+      if (r.status === 201) showDone();
+      else if (r.status === 409) { err("Ta je adresa već u Redu prvih — provjeri e-mail, upute su ti već poslane."); btn.disabled = false; btn.textContent = old; }
+      else throw new Error("HTTP " + r.status);
+    }).catch(function(){
+      err("Nešto je zapelo — provjeri vezu i pokušaj ponovno.");
+      btn.disabled = false; btn.textContent = old;
+    });
+  });
+
+  var done = document.getElementById("tDone");
+  function showDone(){
+    form.style.display = "none";
+    done.style.display = "block";
+    if (!rm) document.getElementById("stamp").classList.add("play");
+    window.scrollTo({top: done.getBoundingClientRect().top + scrollY - 180, behavior: rm ? "auto" : "smooth"});
+  }
+
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>
